@@ -1,0 +1,137 @@
+import React, { useContext, useState } from "react";
+import { ShopContext } from "../Context/ShopContext";
+import axios from "axios";
+
+const Products = () => {
+  const { products } = useContext(ShopContext);
+
+  // Order Modal State
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showOrderModal, setShowOrderModal] = useState(false);
+  const [customerName, setCustomerName] = useState("");
+  const [customerMobile, setCustomerMobile] = useState("");
+  const [orderMessage, setOrderMessage] = useState("");
+
+  const handleBuyNow = (product) => {
+    setSelectedProduct(product);
+    setShowOrderModal(true);
+    setOrderMessage("");
+  };
+
+  const handlePlaceOrder = async (e) => {
+    e.preventDefault();
+    if (!customerName || !customerMobile) {
+      setOrderMessage("Please fill in all details.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(import.meta.env.VITE_API_URL + "/api/orders", {
+        customerName,
+        customerMobile,
+        productName: selectedProduct.name,
+        productPrice: selectedProduct.price,
+        productId: selectedProduct.id
+      });
+
+      if (response.data.success) {
+        setOrderMessage("Order placed successfully! We will contact you soon.");
+        setTimeout(() => {
+          setShowOrderModal(false);
+          setCustomerName("");
+          setCustomerMobile("");
+          setSelectedProduct(null);
+        }, 2000);
+      }
+    } catch (error) {
+      setOrderMessage("Failed to place order. Please try again.");
+    }
+  };
+
+  return (
+    <div className="container mx-auto py-10 px-4">
+      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Our Collection</h2>
+      {products.length === 0 ? (
+        <p className="text-center text-gray-500">No products found.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {products.map((product) => (
+            <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
+              <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
+              <div className="p-4">
+                <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
+                <p className="text-gray-600 mt-2">{product.category}</p>
+                <div className="flex justify-between items-center mt-4">
+                  <span className="text-lg font-bold text-yellow-600">₹{product.price}</span>
+                  <button
+                    onClick={() => handleBuyNow(product)}
+                    className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+                  >
+                    Buy Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Order Modal */}
+      {showOrderModal && selectedProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-96">
+            <h3 className="text-2xl font-bold mb-4">Place Order</h3>
+            <p className="mb-4 text-gray-600">Product: <span className="font-semibold">{selectedProduct.name}</span> (₹{selectedProduct.price})</p>
+
+            <form onSubmit={handlePlaceOrder}>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">Your Name</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border rounded-lg"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">Mobile Number</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border rounded-lg"
+                  value={customerMobile}
+                  onChange={(e) => setCustomerMobile(e.target.value)}
+                  required
+                />
+              </div>
+
+              {orderMessage && (
+                <p className={`mb-4 text-sm ${orderMessage.includes("success") ? "text-green-600" : "text-red-500"}`}>
+                  {orderMessage}
+                </p>
+              )}
+
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowOrderModal(false)}
+                  className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700"
+                >
+                  Confirm Order
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Products;
