@@ -80,9 +80,9 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100 relative">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 relative p-4">
+      <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-xl md:text-2xl font-bold mb-6 text-center text-gray-800">
           Admin Login
         </h2>
         <form onSubmit={handleLogin}>
@@ -133,8 +133,8 @@ const AdminLogin = () => {
 
       {/* Forgot Password Modal */}
       {showForgotModal && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-xl w-96">
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+          <div className="bg-white p-4 md:p-6 rounded-lg shadow-xl w-full max-w-md">
             <h3 className="text-xl font-bold mb-4">Reset Password</h3>
 
             {forgotStep === 1 ? (

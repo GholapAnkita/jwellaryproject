@@ -78,27 +78,27 @@ const Products = () => {
 
       {/* Order Modal */}
       {showOrderModal && selectedProduct && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl w-96">
-            <h3 className="text-2xl font-bold mb-4">Place Order</h3>
-            <p className="mb-4 text-gray-600">Product: <span className="font-semibold">{selectedProduct.name}</span> (₹{selectedProduct.price})</p>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+          <div className="bg-white p-4 md:p-6 rounded-lg shadow-xl w-full max-w-md">
+            <h3 className="text-xl md:text-2xl font-bold mb-4">Place Order</h3>
+            <p className="mb-4 text-gray-600 text-sm md:text-base">Product: <span className="font-semibold">{selectedProduct.name}</span> (₹{selectedProduct.price})</p>
 
             <form onSubmit={handlePlaceOrder}>
               <div className="mb-4">
-                <label className="block text-gray-700 font-semibold mb-2">Your Name</label>
+                <label className="block text-gray-700 font-semibold mb-2 text-sm md:text-base">Your Name</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-2 border rounded-lg"
+                  className="w-full px-3 py-2 border rounded-lg text-sm md:text-base"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 font-semibold mb-2">Mobile Number</label>
+                <label className="block text-gray-700 font-semibold mb-2 text-sm md:text-base">Mobile Number</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-2 border rounded-lg"
+                  className="w-full px-3 py-2 border rounded-lg text-sm md:text-base"
                   value={customerMobile}
                   onChange={(e) => setCustomerMobile(e.target.value)}
                   required
@@ -111,17 +111,17 @@ const Products = () => {
                 </p>
               )}
 
-              <div className="flex justify-end gap-2">
+              <div className="flex justify-end gap-2 flex-col sm:flex-row">
                 <button
                   type="button"
                   onClick={() => setShowOrderModal(false)}
-                  className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400"
+                  className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 text-sm md:text-base mb-2 sm:mb-0"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700"
+                  className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 text-sm md:text-base"
                 >
                   Confirm Order
                 </button>
