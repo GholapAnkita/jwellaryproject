@@ -4,7 +4,7 @@ const ProductCard = ({ product }) => {
   return (
     <div className="border rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 float bg-white">
       <img
-        src={product.image}
+       src={product.image?.replace('http://localhost:5000', import.meta.env.VITE_API_URL)}
         alt={product.name}
         className="w-full h-64 object-cover"
       />
