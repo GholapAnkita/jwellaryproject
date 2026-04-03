@@ -6,6 +6,7 @@ const { readJSON, writeJSON, sendEmail, USERS_FILE, ORDERS_FILE, PRODUCTS_FILE, 
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://backend-b851.onrender.com' : `http://localhost:${PORT}`;
 
 // Middleware
 app.use(cors());
@@ -157,7 +158,7 @@ app.post('/api/products', upload.single('image'), (req, res) => {
             name: req.body.name,
             price: Number(req.body.price),
             category: req.body.category,
-            image: req.file ? `http://localhost:${PORT}/uploads/${req.file.filename}` : req.body.image
+            image: req.file ? `${BASE_URL}/uploads/${req.file.filename}` : req.body.image
         };
         products.push(newProduct);
         writeJSON(PRODUCTS_FILE, products);
@@ -192,7 +193,7 @@ app.put('/api/products/:id', upload.single('image'), (req, res) => {
             };
 
             if (req.file) {
-                updatedProduct.image = `http://localhost:${PORT}/uploads/${req.file.filename}`;
+                updatedProduct.image = `${BASE_URL}/uploads/${req.file.filename}`;
             } else if (req.body.image) {
                 updatedProduct.image = req.body.image;
             }
