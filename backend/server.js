@@ -5,7 +5,7 @@ const path = require('path');
 const { readJSON, writeJSON, sendEmail, USERS_FILE, ORDERS_FILE, PRODUCTS_FILE, ENQUIRIES_FILE } = require('./utils');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
@@ -208,6 +208,6 @@ app.put('/api/products/:id', upload.single('image'), (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
 });
