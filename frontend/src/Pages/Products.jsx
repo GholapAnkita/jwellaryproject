@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
+import ImagePreviewModal from "../Components/ImagePreviewModal";
 
 const Products = () => {
   const { products } = useContext(ShopContext);
@@ -11,6 +12,13 @@ const Products = () => {
   const [customerName, setCustomerName] = useState("");
   const [customerMobile, setCustomerMobile] = useState("");
   const [orderMessage, setOrderMessage] = useState("");
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+
+  const handleImageClick = (imageSrc) => {
+    setPreviewImage(imageSrc);
+    setShowPreviewModal(true);
+  };
 
   const handleBuyNow = (product) => {
     setSelectedProduct(product);
@@ -63,7 +71,12 @@ const Products = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {products.map((product) => (
             <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
-              <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
+              <img 
+                src={product.image} 
+                alt={product.name} 
+                className="w-full h-48 object-cover cursor-pointer hover:opacity-90 transition"
+                onClick={() => handleImageClick(product.image)}
+              />
               <div className="p-4">
                 <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
                 <p className="text-gray-600 mt-2">{product.category}</p>
@@ -136,6 +149,13 @@ const Products = () => {
           </div>
         </div>
       )}
+    {/* Image Preview Modal */}
+      <ImagePreviewModal
+        show={showPreviewModal}
+        imageSrc={previewImage}
+        alt="Product Image Preview"
+        onClose={() => setShowPreviewModal(false)}
+      />
     </div>
   );
 };

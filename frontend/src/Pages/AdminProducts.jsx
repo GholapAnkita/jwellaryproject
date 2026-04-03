@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
+import ImageCropModal from "../Components/ImageCropModal";
+import ImagePreviewModal from "../Components/ImagePreviewModal";
 
 const AdminProducts = () => {
   const { products, addProduct, updateProduct, deleteProduct, logoutAdmin } =
@@ -10,6 +12,11 @@ const AdminProducts = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showCropModal, setShowCropModal] = useState(false);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [selectedImageForCrop, setSelectedImageForCrop] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -39,6 +46,29 @@ const AdminProducts = () => {
     setCurrentProduct(product);
     setIsEditing(true);
     setShowModal(true);
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setSelectedImageForCrop(event.target.result);
+        setShowCropModal(true);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCropComplete = (croppedFile) => {
+    setCroppedImage(croppedFile);
+    setFormData({ ...formData, image: croppedFile });
+    setShowCropModal(false);
+  };
+
+  const handleImageClick = (imageSrc) => {
+    setPreviewImage(imageSrc);
+    setShowPreviewModal(true);
   };
 
   const handleSubmit = (e) => {
@@ -109,7 +139,8 @@ const AdminProducts = () => {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-12 h-12 object-cover rounded"
+                      className="w-12 h-12 object-cover rounded cursor-pointer hover:scale-110 transition"
+                      onClick={() => handleImageClick(product.image)}
                     />
                   </td>
                   <td className="py-2 px-4 font-medium">{product.name}</td>
@@ -198,12 +229,23 @@ const AdminProducts = () => {
                 <input
                   type="file"
                   name="imageFile"
-                  onChange={(e) =>
-                    setFormData({ ...formData, image: e.target.files[0] })
-                  }
+                  onChange={handleImageUpload}
                   className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 mb-2"
                   accept="image/*"
                 />
+                {croppedImage && (
+                  <div className="mt-2">
+                    <p className="text-xs text-green-600 mb-1">
+                      ✅ Image cropped and ready: {croppedImage.name}
+                    </p>
+                    <img
+                      src={URL.createObjectURL(croppedImage)}
+                      alt="Cropped preview"
+                      className="w-20 h-20 object-cover rounded cursor-pointer hover:scale-110 transition"
+                      onClick={() => handleImageClick(URL.createObjectURL(croppedImage))}
+                    />
+                  </div>
+                )}
                 <p className="text-center text-sm text-gray-500 my-1">- OR -</p>
                 {/* URL Input */}
                 <input
@@ -242,6 +284,21 @@ const AdminProducts = () => {
           </div>
         </div>
       )}
+      {/* Image Crop Modal */}
+      <ImageCropModal
+        show={showCropModal}
+        imageSrc={selectedImageForCrop}
+        onCropComplete={handleCropComplete}
+        onCancel={() => setShowCropModal(false)}
+      />
+
+      {/* Image Preview Modal */}
+      <ImagePreviewModal
+        show={showPreviewModal}
+        imageSrc={previewImage}
+        alt="Product Image Preview"
+        onClose={() => setShowPreviewModal(false)}
+      />
     </div>
   );
 };
