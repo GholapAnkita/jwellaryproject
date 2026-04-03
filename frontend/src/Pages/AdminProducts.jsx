@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
-import ImageCropModal from "../Components/ImageCropModal";
 import ImagePreviewModal from "../Components/ImagePreviewModal";
 
 const AdminProducts = () => {
@@ -12,11 +11,8 @@ const AdminProducts = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [showCropModal, setShowCropModal] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  const [selectedImageForCrop, setSelectedImageForCrop] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -46,24 +42,6 @@ const AdminProducts = () => {
     setCurrentProduct(product);
     setIsEditing(true);
     setShowModal(true);
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setSelectedImageForCrop(event.target.result);
-        setShowCropModal(true);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleCropComplete = (croppedFile) => {
-    setCroppedImage(croppedFile);
-    setFormData({ ...formData, image: croppedFile });
-    setShowCropModal(false);
   };
 
   const handleImageClick = (imageSrc) => {
@@ -229,20 +207,22 @@ const AdminProducts = () => {
                 <input
                   type="file"
                   name="imageFile"
-                  onChange={handleImageUpload}
+                  onChange={(e) =>
+                    setFormData({ ...formData, image: e.target.files[0] })
+                  }
                   className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 mb-2"
                   accept="image/*"
                 />
-                {croppedImage && (
+                {typeof formData.image === "object" && formData.image && (
                   <div className="mt-2">
                     <p className="text-xs text-green-600 mb-1">
-                      ✅ Image cropped and ready: {croppedImage.name}
+                      ✅ Image selected: {formData.image.name}
                     </p>
                     <img
-                      src={URL.createObjectURL(croppedImage)}
-                      alt="Cropped preview"
+                      src={URL.createObjectURL(formData.image)}
+                      alt="Selected preview"
                       className="w-20 h-20 object-cover rounded cursor-pointer hover:scale-110 transition"
-                      onClick={() => handleImageClick(URL.createObjectURL(croppedImage))}
+                      onClick={() => handleImageClick(URL.createObjectURL(formData.image))}
                     />
                   </div>
                 )}
@@ -284,14 +264,6 @@ const AdminProducts = () => {
           </div>
         </div>
       )}
-      {/* Image Crop Modal */}
-      <ImageCropModal
-        show={showCropModal}
-        imageSrc={selectedImageForCrop}
-        onCropComplete={handleCropComplete}
-        onCancel={() => setShowCropModal(false)}
-      />
-
       {/* Image Preview Modal */}
       <ImagePreviewModal
         show={showPreviewModal}
