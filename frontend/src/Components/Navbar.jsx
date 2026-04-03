@@ -6,7 +6,9 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-800 text-white p-4 flex justify-between items-center sticky top-0 z-50">
-      <div className="text-xl md:text-2xl font-bold">HandCrafted jewelry</div>
+      <div className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-500 bg-clip-text text-transparent">
+        HandCrafted Jewelry by Ankita
+      </div>
       
       {/* Mobile menu button */}
       <button 

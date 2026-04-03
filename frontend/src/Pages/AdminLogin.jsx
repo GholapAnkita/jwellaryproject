@@ -80,11 +80,17 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 relative p-4">
-      <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-xl md:text-2xl font-bold mb-6 text-center text-gray-800">
-          Admin Login
-        </h2>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 relative p-4">
+      <div className="bg-white p-6 md:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-100">
+        <div className="text-center mb-6">
+          <div className="w-20 h-20 bg-gradient-to-r from-yellow-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <span className="text-3xl">👑</span>
+          </div>
+          <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            Admin Portal
+          </h2>
+          <p className="text-sm text-gray-600 mt-2">HandCrafted Jewelry by Ankita</p>
+        </div>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-gray-700 font-semibold mb-2">
@@ -92,22 +98,22 @@ const AdminLogin = () => {
             </label>
             <input
               type="text"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="admin"
+              placeholder="Enter your username"
             />
           </div>
-          <div className="mb-2">
+          <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">
               Password
             </label>
             <input
               type="password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="password"
+              placeholder="Enter your password"
             />
           </div>
 
@@ -124,9 +130,9 @@ const AdminLogin = () => {
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-700 transition font-bold"
+            className="w-full bg-gradient-to-r from-yellow-500 to-pink-500 text-white py-3 rounded-lg hover:from-yellow-600 hover:to-pink-600 transition duration-300 font-bold shadow-lg transform hover:scale-105"
           >
-            Login
+            🔐 Login to Admin
           </button>
         </form>
       </div>
