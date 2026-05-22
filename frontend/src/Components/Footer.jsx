@@ -12,7 +12,7 @@ const Footer = () => {
             <div className="flex items-center space-x-3 mb-4">
               <img 
                 src={logo} 
-                alt="HandCrafted Jewelry Logo" 
+                alt="HandCrafted Jewellery Logo" 
                 className="w-12 h-12 object-contain rounded-full border border-yellow-500/30 bg-gray-900"
               />
               <span className="font-serif text-lg md:text-xl font-semibold text-white tracking-wide">
@@ -20,7 +20,7 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
-              Discover beautiful, handcrafted jewelry pieces made with meticulous detail, high-quality materials, and artistic love. Designed to make you shine on every occasion.
+              Discover beautiful, handcrafted jewellery pieces made with meticulous detail, high-quality materials, and artistic love. Designed to make you shine on every occasion.
             </p>
           </div>
 
@@ -61,7 +61,7 @@ const Footer = () => {
 
         {/* Copywrite Section */}
         <div className="border-t border-gray-900 pt-8 text-center flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 space-y-4 md:space-y-0">
-          <p>© 2026 HandCrafted Jewelry by Ankita. All rights reserved.</p>
+          <p>© 2026 HandCrafted Jewellery by Ankita. All rights reserved.</p>
           <p className="flex items-center">
             Handcrafted with <span className="text-red-500 mx-1">♥</span> and precision.
           </p>

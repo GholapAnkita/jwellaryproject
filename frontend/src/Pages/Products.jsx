@@ -67,7 +67,7 @@ const Products = () => {
         </h2>
         <div className="w-16 h-[2px] bg-gradient-to-r from-yellow-600 to-amber-500 mx-auto rounded-full mb-4"></div>
         <p className="text-sm text-stone-500 leading-relaxed font-light">
-          Discover our finest handcrafted jewelry pieces, each designed with artistic passion and meticulously finished for luxurious beauty.
+          Discover our finest handcrafted jewellery pieces, each designed with artistic passion and meticulously finished for luxurious beauty.
         </p>
       </div>
 

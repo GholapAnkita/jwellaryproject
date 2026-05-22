@@ -18,7 +18,7 @@ const Navbar = () => {
       <Link to="/" className="flex items-center space-x-3 group">
         <img 
           src={logo} 
-          alt="HandCrafted Jewelry Logo" 
+          alt="HandCrafted Jewellery Logo" 
           className="w-10 h-10 object-contain rounded-full border border-yellow-500/40 bg-gray-900 group-hover:scale-105 transition duration-300"
         />
         <span className="font-serif text-lg sm:text-xl md:text-2xl font-semibold tracking-wide bg-gradient-to-r from-yellow-500 via-amber-300 to-yellow-600 bg-clip-text text-transparent transition">

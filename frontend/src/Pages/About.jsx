@@ -27,7 +27,7 @@ const About = () => {
               <div className="absolute -inset-1.5 bg-gradient-to-r from-yellow-500 to-amber-600 rounded-full blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
               <img 
                 src={logo} 
-                alt="HandCrafted Jewelry Logo" 
+                alt="HandCrafted Jewellery Logo" 
                 className="relative w-28 h-28 object-contain rounded-full border-2 border-yellow-500/40 bg-gray-950 p-2 shadow-lg"
               />
             </div>
@@ -39,10 +39,10 @@ const About = () => {
           
           <div className="space-y-6 text-stone-600 leading-relaxed font-light text-base sm:text-lg">
             <p>
-              Welcome to <span className="font-semibold text-gray-900">HandCrafted Jewelry by Ankita</span>, where tradition meets contemporary sophistication. Established with a vision to create bespoke art, our boutique specializes in custom ornaments designed with care, passion, and meticulous craftsmanship.
+              Welcome to <span className="font-semibold text-gray-900">HandCrafted Jewellery by Ankita</span>, where tradition meets contemporary sophistication. Established with a vision to create bespoke art, our boutique specializes in custom ornaments designed with care, passion, and meticulous craftsmanship.
             </p>
             <p>
-              Our founder, Ankita, is highly passionate about crafting exquisite, trending pearl (मोती) jewelry. She believes that premium pearls are timeless treasures of elegance that should be accessible to all. By blending top-quality, hand-selected pearls with incredibly affordable pricing, she designs masterpieces that are both highly popular and budget-friendly. Each piece in our collection is thoughtfully designed and created by hand, ensuring that no two pieces are exactly identical, making your chosen adornment truly unique to you.
+              Our founder, Ankita, is highly passionate about crafting exquisite, trending pearl (मोती) jewellery. She believes that premium pearls are timeless treasures of elegance that should be accessible to all. By blending top-quality, hand-selected pearls with incredibly affordable pricing, she designs masterpieces that are both highly popular and budget-friendly. Each piece in our collection is thoughtfully designed and created by hand, ensuring that no two pieces are exactly identical, making your chosen adornment truly unique to you.
             </p>
           </div>
         </div>
@@ -67,7 +67,7 @@ const About = () => {
             <div className="text-3xl mb-3 text-amber-600">✨</div>
             <h3 className="font-serif font-bold text-gray-900 text-base mb-2">Artisan Heritage</h3>
             <p className="text-stone-500 text-xs leading-relaxed">
-              By supporting local skills and custom hand-weaving, we keep beautiful traditional jewelry techniques alive.
+              By supporting local skills and custom hand-weaving, we keep beautiful traditional jewellery techniques alive.
             </p>
           </div>
         </div>

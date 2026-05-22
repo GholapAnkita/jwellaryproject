@@ -16,10 +16,10 @@ const Home = () => {
       <div className="relative z-10 max-w-4xl mx-auto">
         <div className="mb-8">
           <span className="text-xs uppercase tracking-widest font-semibold text-yellow-700 bg-yellow-500/10 px-4 py-1.5 rounded-full inline-block mb-4 border border-yellow-500/10 animate-pulse">
-            Trending Handcrafted Pearl Jewelry
+            Trending Handcrafted Pearl Jewellery
           </span>
           <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-4 bg-gradient-to-r from-yellow-700 via-amber-600 to-yellow-800 bg-clip-text text-transparent py-1">
-            HandCrafted Jewelry by Ankita
+            HandCrafted Jewellery by Ankita
           </h1>
           <div className="w-20 h-[2px] bg-gradient-to-r from-yellow-600 to-amber-500 mx-auto rounded-full mt-4"></div>
         </div>

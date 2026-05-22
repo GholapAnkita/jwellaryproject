@@ -89,7 +89,7 @@ const AdminLogin = () => {
           <h2 className="font-serif text-2xl font-bold bg-gradient-to-r from-stone-900 to-stone-700 bg-clip-text text-transparent">
             Admin Portal
           </h2>
-          <p className="text-xs text-stone-500 mt-2 tracking-wide">HandCrafted Jewelry by Ankita</p>
+          <p className="text-xs text-stone-500 mt-2 tracking-wide">HandCrafted Jewellery by Ankita</p>
         </div>
         
         <form onSubmit={handleLogin} className="space-y-5">
