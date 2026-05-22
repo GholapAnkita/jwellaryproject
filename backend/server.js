@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
-const { readJSON, writeJSON, sendEmail, USERS_FILE, ORDERS_FILE, PRODUCTS_FILE, ENQUIRIES_FILE } = require('./utils');
+const { readJSON, writeJSON, sendEmail, USERS_FILE, ORDERS_FILE, PRODUCTS_FILE, ENQUIRIES_FILE, SETTINGS_FILE } = require('./utils');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -136,6 +136,27 @@ app.post('/api/contact', (req, res) => {
 app.get('/api/enquiries', (req, res) => {
     const enquiries = readJSON(ENQUIRIES_FILE);
     res.json(enquiries);
+});
+
+
+// ============================================
+// SETTINGS ROUTES (PROMOTIONS & SALES)
+// ============================================
+
+// Get Current Settings
+app.get('/api/settings', (req, res) => {
+    const settings = readJSON(SETTINGS_FILE);
+    res.json(settings);
+});
+
+// Update Settings
+app.post('/api/settings', (req, res) => {
+    const success = writeJSON(SETTINGS_FILE, req.body);
+    if (success) {
+        res.json({ success: true, settings: req.body });
+    } else {
+        res.status(500).json({ success: false, message: "Failed to update settings" });
+    }
 });
 
 

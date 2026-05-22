@@ -14,6 +14,7 @@ if (!fs.existsSync(DATA_DIR)) {
 }
 
 const ENQUIRIES_FILE = path.join(DATA_DIR, 'enquiries.json');
+const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 
 // Initial check for files
 [USERS_FILE, ORDERS_FILE, PRODUCTS_FILE, ENQUIRIES_FILE].forEach(file => {
@@ -21,6 +22,15 @@ const ENQUIRIES_FILE = path.join(DATA_DIR, 'enquiries.json');
         fs.writeFileSync(file, '[]', 'utf-8');
     }
 });
+
+if (!fs.existsSync(SETTINGS_FILE)) {
+    const defaultSettings = {
+        promoEnabled: true,
+        promoText: "✨ Special Festive Sale: 15% OFF on our premium pearl collections! Use code: FESTIVE15 💖",
+        promoTheme: "gold"
+    };
+    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2), 'utf-8');
+}
 
 // Generic Read Function
 const readJSON = (filePath) => {
@@ -86,5 +96,6 @@ module.exports = {
     USERS_FILE,
     ORDERS_FILE,
     PRODUCTS_FILE,
-    ENQUIRIES_FILE
+    ENQUIRIES_FILE,
+    SETTINGS_FILE
 };

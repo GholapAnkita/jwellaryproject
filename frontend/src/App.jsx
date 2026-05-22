@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
+import PromoBanner from "./Components/PromoBanner";
 import Footer from "./Components/Footer";
 import Home from "./Pages/Home";
 import Products from "./Pages/Products";
@@ -22,6 +23,7 @@ function App() {
   return (
     <ShopProvider>
       <Router>
+        <PromoBanner />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

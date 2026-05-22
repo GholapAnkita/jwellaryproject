@@ -8,12 +8,18 @@ export const ShopProvider = ({ children }) => {
     const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
         return localStorage.getItem("isAdminLoggedIn") === "true";
     });
+    const [settings, setSettings] = useState({
+        promoEnabled: true,
+        promoText: "✨ Special Festive Sale: 15% OFF on our premium pearl collections! Use code: FESTIVE15 💖",
+        promoTheme: "gold"
+    });
 
     const API_URL = import.meta.env.VITE_API_URL;
 
-    // Fetch products from backend
+    // Fetch products and settings from backend
     useEffect(() => {
         fetchProducts();
+        fetchSettings();
     }, []);
 
     const fetchProducts = async () => {
@@ -22,6 +28,17 @@ export const ShopProvider = ({ children }) => {
             setProducts(response.data);
         } catch (error) {
             console.error("Error fetching products:", error);
+        }
+    };
+
+    const fetchSettings = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/api/settings`);
+            if (response.data && !Array.isArray(response.data)) {
+                setSettings(response.data);
+            }
+        } catch (error) {
+            console.error("Error fetching settings:", error);
         }
     };
 
@@ -85,6 +102,20 @@ export const ShopProvider = ({ children }) => {
         }
     };
 
+    const updateSettings = async (newSettings) => {
+        try {
+            const response = await axios.post(`${API_URL}/api/settings`, newSettings);
+            if (response.data.success) {
+                setSettings(newSettings);
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error("Error updating settings:", error);
+            return false;
+        }
+    };
+
     const loginAdmin = () => setIsAdminLoggedIn(true);
     const logoutAdmin = () => setIsAdminLoggedIn(false);
 
@@ -96,6 +127,8 @@ export const ShopProvider = ({ children }) => {
         isAdminLoggedIn,
         loginAdmin,
         logoutAdmin,
+        settings,
+        updateSettings,
     };
 
     return (
