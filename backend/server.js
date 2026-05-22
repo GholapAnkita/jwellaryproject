@@ -114,6 +114,19 @@ app.post('/api/orders', (req, res) => {
     res.json({ success: true, order: newOrder });
 });
 
+// DELETE order
+app.delete('/api/orders/:id', (req, res) => {
+    try {
+        const orders = readJSON(ORDERS_FILE);
+        const id = Number(req.params.id);
+        const filtered = orders.filter(o => o.id !== id);
+        writeJSON(ORDERS_FILE, filtered);
+        res.json({ success: true });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
 
 // ============================================
 // ENQUIRY ROUTES

@@ -26,6 +26,21 @@ const OrderManagement = () => {
         }
     };
 
+    const handleDeleteOrder = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this order? This action cannot be undone.")) {
+            return;
+        }
+        try {
+            const response = await axios.delete(import.meta.env.VITE_API_URL + `/api/orders/${id}`);
+            if (response.data.success) {
+                setOrders(prev => prev.filter(order => order.id !== id));
+            }
+        } catch (error) {
+            console.error("Error deleting order:", error);
+            alert("Failed to delete order. Please try again.");
+        }
+    };
+
     const handleLogout = () => {
         logoutAdmin();
         navigate("/admin");
@@ -243,12 +258,21 @@ const OrderManagement = () => {
                                                     </span>
                                                 </td>
                                                 <td className="py-4 px-6 text-center">
-                                                    <button
-                                                        onClick={() => handleWhatsAppContact(order)}
-                                                        className="bg-green-600 hover:bg-green-700 text-white font-bold uppercase tracking-wider text-[9px] px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition duration-300 mx-auto border border-green-500/10"
-                                                    >
-                                                        <span className="text-[11px]">💬</span> WhatsApp Customer
-                                                    </button>
+                                                    <div className="flex items-center justify-center gap-2">
+                                                        <button
+                                                            onClick={() => handleWhatsAppContact(order)}
+                                                            className="bg-green-600 hover:bg-green-700 text-white font-bold uppercase tracking-wider text-[9px] px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition duration-300 border border-green-500/10"
+                                                        >
+                                                            <span className="text-[11px]">💬</span> WhatsApp Customer
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleDeleteOrder(order.id)}
+                                                            className="bg-transparent hover:bg-red-50 text-red-500 border border-red-200/50 hover:border-red-500 p-1.5 rounded-lg transition duration-300 shadow-sm cursor-pointer"
+                                                            title="Delete Order"
+                                                        >
+                                                            <span className="text-sm">🗑️</span>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         );
