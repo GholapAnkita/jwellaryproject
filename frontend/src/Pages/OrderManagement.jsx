@@ -6,6 +6,8 @@ import { ShopContext } from '../Context/ShopContext';
 const OrderManagement = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [statusFilter, setStatusFilter] = useState("all");
     const navigate = useNavigate();
     const { logoutAdmin } = useContext(ShopContext);
 
@@ -29,13 +31,43 @@ const OrderManagement = () => {
         navigate("/admin");
     };
 
-    // Advanced analytics computed from orders
+    const handleWhatsAppContact = (order) => {
+        const cleanMobile = order.customerMobile.replace(/\D/g, ""); // Keep only digits
+        const formattedMobile = cleanMobile.startsWith("91") && cleanMobile.length === 12 
+            ? cleanMobile 
+            : cleanMobile.length === 10 
+                ? "91" + cleanMobile 
+                : cleanMobile;
+        
+        const message = `Hello ${order.customerName}! ✨\n\nThis is Ankita from HandCrafted Jewellery. I have received your order for the gorgeous "${order.productName}" (Price: ₹${Number(order.productPrice).toLocaleString('en-IN')}).\n\nI would love to connect with you to confirm your order details and delivery timeline. 💖\n\nThank you for choosing handcrafted excellence!`;
+        const encodedText = encodeURIComponent(message);
+        
+        window.open(`https://wa.me/${formattedMobile}?text=${encodedText}`, "_blank");
+    };
+
+    // Advanced analytics computed from all orders
     const totalOrders = orders.length;
     const totalRevenue = orders.reduce((acc, curr) => acc + (Number(curr.productPrice) || 0), 0);
     const pendingOrders = orders.filter(o => {
         const s = o.status?.toLowerCase() || '';
         return s.includes('pending') || s.includes('ordered') || s.includes('new');
     }).length;
+
+    // Filtered orders list for visual rendering
+    const filteredOrders = orders.filter(order => {
+        const matchesSearch = 
+            order.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            order.customerMobile?.includes(searchTerm) ||
+            order.productName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            order.id?.toString().includes(searchTerm);
+        
+        const matchesStatus = 
+            statusFilter === "all" ||
+            (statusFilter === "pending" && ((order.status?.toLowerCase() || '').includes('pending') || (order.status?.toLowerCase() || '').includes('ordered'))) ||
+            (statusFilter === "completed" && !((order.status?.toLowerCase() || '').includes('pending') || (order.status?.toLowerCase() || '').includes('ordered')));
+            
+        return matchesSearch && matchesStatus;
+    });
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 p-6 md:p-10 font-sans">
@@ -106,6 +138,33 @@ const OrderManagement = () => {
                         </div>
                     )}
 
+                    {/* Search and Filters Section */}
+                    {!loading && orders.length > 0 && (
+                        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                            <div className="flex-1 relative">
+                                <span className="absolute left-3.5 top-3 text-stone-400 text-xs">🔍</span>
+                                <input
+                                    type="text"
+                                    placeholder="Search by customer name, mobile number, jewellery product, or order ID..."
+                                    className="w-full pl-9 pr-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 font-medium"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                            </div>
+                            <div className="w-full sm:w-52">
+                                <select
+                                    className="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 font-bold text-stone-600 cursor-pointer"
+                                    value={statusFilter}
+                                    onChange={(e) => setStatusFilter(e.target.value)}
+                                >
+                                    <option value="all">📁 All Orders</option>
+                                    <option value="pending">⏳ Pending Fulfillment</option>
+                                    <option value="completed">✅ Completed Orders</option>
+                                </select>
+                            </div>
+                        </div>
+                    )}
+
                     {loading ? (
                         <div className="flex flex-col items-center justify-center py-20 space-y-3">
                             <div className="w-10 h-10 border-4 border-yellow-500/20 border-t-yellow-600 rounded-full animate-spin"></div>
@@ -115,6 +174,12 @@ const OrderManagement = () => {
                         <div className="text-center py-16">
                             <span className="text-4xl block mb-3">📭</span>
                             <p className="text-stone-400 font-light text-sm">No orders have been recorded in the database yet.</p>
+                        </div>
+                    ) : filteredOrders.length === 0 ? (
+                        <div className="text-center py-16 bg-stone-50 border border-dashed border-stone-200 rounded-2xl">
+                            <span className="text-3xl block mb-3">🔍</span>
+                            <p className="text-stone-500 font-medium text-xs mb-1">No matching orders found.</p>
+                            <p className="text-stone-400 font-light text-[10px]">Try adjusting your search keywords or status filter.</p>
                         </div>
                     ) : (
                         <div className="overflow-x-auto rounded-xl border border-stone-100 shadow-sm">
@@ -128,13 +193,14 @@ const OrderManagement = () => {
                                         <th className="py-4 px-6 text-left">Price</th>
                                         <th className="py-4 px-6 text-left">Date Placed</th>
                                         <th className="py-4 px-6 text-center">Status</th>
+                                        <th className="py-4 px-6 text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-stone-600 text-xs font-light divide-y divide-stone-100">
-                                    {orders.map((order) => {
+                                    {filteredOrders.map((order) => {
                                         const isPending = (order.status?.toLowerCase() || '').includes('pending') || (order.status?.toLowerCase() || '').includes('ordered');
                                         return (
-                                            <tr key={order.id} className="hover:bg-stone-50/50 transition border-b border-stone-100">
+                                            <tr key={order.id} className="hover:bg-stone-50/50 transition border-b border-stone-100 animate-fade-in">
                                                 <td className="py-4 px-6 font-mono text-[11px] text-stone-400 font-semibold">#{order.id}</td>
                                                 <td className="py-4 px-6 font-semibold text-gray-950 text-sm">{order.customerName}</td>
                                                 <td className="py-4 px-6 text-stone-600 text-sm">{order.customerMobile}</td>
@@ -149,6 +215,14 @@ const OrderManagement = () => {
                                                     }`}>
                                                         {order.status || "Completed"}
                                                     </span>
+                                                </td>
+                                                <td className="py-4 px-6 text-center">
+                                                    <button
+                                                        onClick={() => handleWhatsAppContact(order)}
+                                                        className="bg-green-600 hover:bg-green-700 text-white font-bold uppercase tracking-wider text-[9px] px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition duration-300 mx-auto border border-green-500/10"
+                                                    >
+                                                        <span className="text-[11px]">💬</span> WhatsApp Customer
+                                                    </button>
                                                 </td>
                                             </tr>
                                         );

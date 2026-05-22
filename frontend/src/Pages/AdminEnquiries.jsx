@@ -6,6 +6,7 @@ import { ShopContext } from '../Context/ShopContext';
 const AdminEnquiries = () => {
     const [enquiries, setEnquiries] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
     const { logoutAdmin } = useContext(ShopContext);
 
@@ -29,9 +30,36 @@ const AdminEnquiries = () => {
         navigate("/admin");
     };
 
+    const handleWhatsAppContact = (enquiry) => {
+        if (!enquiry.phone) return;
+        const cleanMobile = enquiry.phone.replace(/\D/g, ""); // Keep only digits
+        const formattedMobile = cleanMobile.startsWith("91") && cleanMobile.length === 12 
+            ? cleanMobile 
+            : cleanMobile.length === 10 
+                ? "91" + cleanMobile 
+                : cleanMobile;
+        
+        const message = `Hello ${enquiry.name}! ✨\n\nThis is Ankita from HandCrafted Jewellery. I received your enquiry from our boutique contact form:\n\n"${enquiry.message}"\n\nI would love to connect and assist you with your requirements! 💖`;
+        const encodedText = encodeURIComponent(message);
+        
+        window.open(`https://wa.me/${formattedMobile}?text=${encodedText}`, "_blank");
+    };
+
     // Computations
     const totalEnquiries = enquiries.length;
     const uniqueSenders = new Set(enquiries.map(e => e.email?.toLowerCase().trim())).size;
+
+    // Filtered enquiries list for visual rendering
+    const filteredEnquiries = enquiries.filter(enquiry => {
+        const matchesSearch = 
+            enquiry.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            enquiry.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (enquiry.phone && enquiry.phone.includes(searchTerm)) ||
+            enquiry.message?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            enquiry.id?.toString().includes(searchTerm);
+            
+        return matchesSearch;
+    });
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 p-6 md:p-10 font-sans">
@@ -97,6 +125,20 @@ const AdminEnquiries = () => {
                         </div>
                     )}
 
+                    {/* Search Filter Bar */}
+                    {!loading && enquiries.length > 0 && (
+                        <div className="relative mb-6">
+                            <span className="absolute left-3.5 top-3 text-stone-400 text-xs">🔍</span>
+                            <input
+                                type="text"
+                                placeholder="Search enquiries by customer name, email, phone/WhatsApp, message keywords, or ID..."
+                                className="w-full pl-9 pr-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 font-medium"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                    )}
+
                     {loading ? (
                         <div className="flex flex-col items-center justify-center py-20 space-y-3">
                             <div className="w-10 h-10 border-4 border-yellow-500/20 border-t-yellow-600 rounded-full animate-spin"></div>
@@ -107,9 +149,15 @@ const AdminEnquiries = () => {
                             <span className="text-4xl block mb-3">📬</span>
                             <p className="text-stone-400 font-light text-sm">Your mailbox is currently empty. No enquiries submitted yet.</p>
                         </div>
+                    ) : filteredEnquiries.length === 0 ? (
+                        <div className="text-center py-16 bg-stone-50 border border-dashed border-stone-200 rounded-2xl">
+                            <span className="text-3xl block mb-3">🔍</span>
+                            <p className="text-stone-500 font-medium text-xs mb-1">No matching enquiries found.</p>
+                            <p className="text-stone-400 font-light text-[10px]">Try adjusting your search keywords.</p>
+                        </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {enquiries.slice().reverse().map((enquiry) => (
+                            {filteredEnquiries.slice().reverse().map((enquiry) => (
                                 <div 
                                     key={enquiry.id} 
                                     className="bg-stone-50/50 border border-stone-200/60 p-6 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition duration-300 relative flex flex-col justify-between"
@@ -119,6 +167,9 @@ const AdminEnquiries = () => {
                                             <div className="min-w-0">
                                                 <h3 className="font-serif font-bold text-base text-gray-950 truncate">{enquiry.name}</h3>
                                                 <p className="text-[11px] text-stone-500 truncate select-all">{enquiry.email}</p>
+                                                {enquiry.phone && (
+                                                    <p className="text-[11px] text-amber-800 font-medium font-mono truncate select-all mt-0.5">📞 {enquiry.phone}</p>
+                                                )}
                                             </div>
                                             <span className="text-[9px] font-bold uppercase tracking-wider text-yellow-700 bg-yellow-500/10 px-2.5 py-1 rounded-full border border-yellow-500/10 whitespace-nowrap shrink-0">
                                                 {new Date(enquiry.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
@@ -132,14 +183,24 @@ const AdminEnquiries = () => {
                                         </div>
                                     </div>
                                     
-                                    <div className="mt-4 pt-3 border-t border-stone-100 flex justify-between items-center text-[10px]">
+                                    <div className="mt-4 pt-3 border-t border-stone-100 flex justify-between items-center text-[10px] gap-2">
                                         <span className="text-stone-400 font-mono">ID: #{enquiry.id}</span>
-                                        <a 
-                                            href={`mailto:${enquiry.email}?subject=Reply from HandCrafted by Ankita`}
-                                            className="text-yellow-700 hover:text-yellow-950 font-bold uppercase tracking-wider flex items-center gap-1 transition"
-                                        >
-                                            ✉️ Send Reply
-                                        </a>
+                                        <div className="flex items-center gap-2">
+                                            {enquiry.phone && (
+                                                <button
+                                                    onClick={() => handleWhatsAppContact(enquiry)}
+                                                    className="bg-green-600 hover:bg-green-700 text-white font-bold uppercase tracking-wider text-[8px] px-2.5 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition duration-300 border border-green-500/10"
+                                                >
+                                                    💬 WhatsApp
+                                                </button>
+                                            )}
+                                            <a 
+                                                href={`mailto:${enquiry.email}?subject=Reply from HandCrafted by Ankita`}
+                                                className="text-yellow-700 hover:text-yellow-950 font-bold uppercase tracking-wider flex items-center gap-1 transition"
+                                            >
+                                                ✉️ Email
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             ))}

@@ -4,6 +4,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
@@ -26,7 +27,7 @@ const Contact = () => {
 
       if (data.success) {
         setSubmitted(true);
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", phone: "", message: "" });
       } else {
         alert("Something went wrong. Try again.");
       }
@@ -78,6 +79,17 @@ const Contact = () => {
               placeholder="Enter your email address"
               className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 bg-white"
               required
+            />
+          </div>
+          <div>
+            <label className="block text-stone-700 text-[10px] font-bold uppercase tracking-wider mb-2">WhatsApp / Phone Number (Optional)</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Enter 10-digit mobile number"
+              className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 bg-white"
             />
           </div>
           <div>
