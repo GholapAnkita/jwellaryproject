@@ -4,7 +4,7 @@ import axios from "axios";
 import ImagePreviewModal from "../Components/ImagePreviewModal";
 
 const Products = () => {
-  const { products } = useContext(ShopContext);
+  const { products, settings } = useContext(ShopContext);
 
   // Order Modal State
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -15,6 +15,30 @@ const Products = () => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
 
+  // Coupon State
+  const [couponInput, setCouponInput] = useState("");
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [couponError, setCouponError] = useState("");
+
+  // Extract dynamic coupon code and discount percentage from settings promoText
+  const getPromoDetails = () => {
+    if (!settings || !settings.promoEnabled || !settings.promoText) {
+      return { code: "", discountPercent: 0 };
+    }
+    
+    // Extract code e.g. "Use code: FESTIVE15" or "Code FESTIVE15"
+    const codeMatch = settings.promoText.match(/code:\s*(\w+)/i) || settings.promoText.match(/code\s+(\w+)/i);
+    const code = codeMatch ? codeMatch[1].toUpperCase() : "";
+    
+    // Extract percentage e.g. "15% OFF" or "15% discount"
+    const percentMatch = settings.promoText.match(/(\d+)\s*%/);
+    const discountPercent = percentMatch ? parseInt(percentMatch[1], 10) : 10; // Default to 10%
+    
+    return { code, discountPercent };
+  };
+
+  const { code: systemCouponCode, discountPercent: systemDiscountPercent } = getPromoDetails();
+
   const handleImageClick = (imageSrc) => {
     setPreviewImage(imageSrc);
     setShowPreviewModal(true);
@@ -24,7 +48,32 @@ const Products = () => {
     setSelectedProduct(product);
     setShowOrderModal(true);
     setOrderMessage("");
+    setCouponInput("");
+    setCouponApplied(false);
+    setCouponError("");
   };
+
+  const handleApplyCoupon = (e) => {
+    e.preventDefault();
+    if (!couponInput.trim()) {
+      setCouponError("Please enter a coupon code.");
+      setCouponApplied(false);
+      return;
+    }
+    
+    if (systemCouponCode && couponInput.trim().toUpperCase() === systemCouponCode) {
+      setCouponApplied(true);
+      setCouponError("");
+    } else {
+      setCouponError("Invalid coupon code. Please try again.");
+      setCouponApplied(false);
+    }
+  };
+
+  // Price Calculations
+  const originalPrice = selectedProduct ? selectedProduct.price : 0;
+  const discountAmount = couponApplied ? Math.round((originalPrice * systemDiscountPercent) / 100) : 0;
+  const finalPrice = originalPrice - discountAmount;
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -38,7 +87,10 @@ const Products = () => {
         customerName,
         customerMobile,
         productName: selectedProduct.name,
-        productPrice: selectedProduct.price,
+        productPrice: originalPrice,
+        discountApplied: discountAmount,
+        finalPrice: finalPrice,
+        promoCodeUsed: couponApplied ? systemCouponCode : "",
         productId: selectedProduct.id
       });
 
@@ -49,6 +101,9 @@ const Products = () => {
           setCustomerName("");
           setCustomerMobile("");
           setSelectedProduct(null);
+          setCouponInput("");
+          setCouponApplied(false);
+          setCouponError("");
         }, 2000);
       }
     } catch (error) {
@@ -119,10 +174,10 @@ const Products = () => {
       {/* Order Modal */}
       {showOrderModal && selectedProduct && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4 animate-fade-in">
-          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-yellow-500/20">
+          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-yellow-500/20 overflow-y-auto max-h-[90vh]">
             <h3 className="font-serif text-xl md:text-2xl font-bold text-gray-950 mb-1">Place Order</h3>
             <p className="text-xs text-stone-500 mb-6 pb-2 border-b border-stone-100">
-              Product: <span className="font-semibold text-yellow-700">{selectedProduct.name}</span> (₹{selectedProduct.price.toLocaleString('en-IN')})
+              Product: <span className="font-semibold text-yellow-700">{selectedProduct.name}</span>
             </p>
 
             <form onSubmit={handlePlaceOrder} className="space-y-4">
@@ -147,6 +202,76 @@ const Products = () => {
                   placeholder="Enter your contact number"
                   required
                 />
+              </div>
+
+              {/* Coupon Section (Only if promo settings are active and a coupon code is parsed) */}
+              {systemCouponCode && (
+                <div className="pt-2">
+                  <label className="block text-stone-700 text-xs font-semibold uppercase tracking-wider mb-2">Promotional Code (Optional)</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      className="flex-1 px-4 py-2.5 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 font-mono uppercase tracking-wider placeholder:normal-case placeholder:font-sans"
+                      value={couponInput}
+                      onChange={(e) => {
+                        setCouponInput(e.target.value);
+                        if (couponError) setCouponError("");
+                      }}
+                      placeholder="Paste promo code here"
+                      disabled={couponApplied}
+                    />
+                    {couponApplied ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCouponApplied(false);
+                          setCouponInput("");
+                        }}
+                        className="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition border border-red-200/30"
+                      >
+                        Remove
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={handleApplyCoupon}
+                        className="bg-stone-950 text-white hover:bg-yellow-600 hover:text-gray-950 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition shadow-sm"
+                      >
+                        Apply
+                      </button>
+                    )}
+                  </div>
+                  
+                  {couponApplied && (
+                    <p className="text-[11px] text-emerald-600 font-semibold mt-1.5 flex items-center gap-1 animate-fade-in">
+                      ✨ Success! "{systemCouponCode}" applied. You got {systemDiscountPercent}% OFF!
+                    </p>
+                  )}
+                  {couponError && (
+                    <p className="text-[11px] text-red-500 font-semibold mt-1.5 flex items-center gap-1 animate-fade-in">
+                      ❌ {couponError}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Price Calculation breakdown */}
+              <div className="bg-stone-50 border border-stone-150 p-4 rounded-xl space-y-2 mt-4">
+                <div className="flex justify-between text-xs text-stone-500 font-medium">
+                  <span>Product Original Price</span>
+                  <span>₹{originalPrice.toLocaleString('en-IN')}</span>
+                </div>
+                {couponApplied && (
+                  <div className="flex justify-between text-xs text-emerald-600 font-semibold">
+                    <span>Festival Coupon Discount ({systemDiscountPercent}%)</span>
+                    <span>- ₹{discountAmount.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
+                <div className="w-full h-[1px] bg-stone-250 my-1"></div>
+                <div className="flex justify-between items-center text-sm font-bold text-gray-950">
+                  <span>Total Payable Price</span>
+                  <span className="text-yellow-700 text-base font-serif font-bold">₹{finalPrice.toLocaleString('en-IN')}</span>
+                </div>
               </div>
 
               {orderMessage && (

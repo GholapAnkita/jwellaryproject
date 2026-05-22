@@ -39,7 +39,12 @@ const OrderManagement = () => {
                 ? "91" + cleanMobile 
                 : cleanMobile;
         
-        const message = `Hello ${order.customerName}! ✨\n\nThis is Ankita from HandCrafted Jewellery. I have received your order for the gorgeous "${order.productName}" (Price: ₹${Number(order.productPrice).toLocaleString('en-IN')}).\n\nI would love to connect with you to confirm your order details and delivery timeline. 💖\n\nThank you for choosing handcrafted excellence!`;
+        const hasDiscount = order.discountApplied && Number(order.discountApplied) > 0;
+        const priceInfo = hasDiscount 
+            ? `Price: ₹${Number(order.finalPrice).toLocaleString('en-IN')} (Discounted from ₹${Number(order.productPrice).toLocaleString('en-IN')} using code: ${order.promoCodeUsed})`
+            : `Price: ₹${Number(order.productPrice).toLocaleString('en-IN')}`;
+        
+        const message = `Hello ${order.customerName}! ✨\n\nThis is Ankita from HandCrafted Jewellery. I have received your order for the gorgeous "${order.productName}" (${priceInfo}).\n\nI would love to connect with you to confirm your order details and delivery timeline. 💖\n\nThank you for choosing handcrafted excellence!`;
         const encodedText = encodeURIComponent(message);
         
         window.open(`https://wa.me/${formattedMobile}?text=${encodedText}`, "_blank");
@@ -47,7 +52,10 @@ const OrderManagement = () => {
 
     // Advanced analytics computed from all orders
     const totalOrders = orders.length;
-    const totalRevenue = orders.reduce((acc, curr) => acc + (Number(curr.productPrice) || 0), 0);
+    const totalRevenue = orders.reduce((acc, curr) => {
+        const finalPrice = curr.finalPrice !== undefined ? Number(curr.finalPrice) : Number(curr.productPrice);
+        return acc + (finalPrice || 0);
+    }, 0);
     const pendingOrders = orders.filter(o => {
         const s = o.status?.toLowerCase() || '';
         return s.includes('pending') || s.includes('ordered') || s.includes('new');
@@ -59,7 +67,8 @@ const OrderManagement = () => {
             order.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             order.customerMobile?.includes(searchTerm) ||
             order.productName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            order.id?.toString().includes(searchTerm);
+            order.id?.toString().includes(searchTerm) ||
+            order.promoCodeUsed?.toLowerCase().includes(searchTerm.toLowerCase());
         
         const matchesStatus = 
             statusFilter === "all" ||
@@ -127,7 +136,7 @@ const OrderManagement = () => {
                             </div>
                             <div className="bg-white p-5 rounded-2xl shadow-md border border-stone-150 relative overflow-hidden">
                                 <div className="absolute right-3 bottom-1 text-5xl opacity-10 text-yellow-600">✨</div>
-                                <p className="text-[10px] uppercase tracking-widest text-stone-500 font-bold mb-1">Estimated Revenue</p>
+                                <p className="text-[10px] uppercase tracking-widest text-stone-500 font-bold mb-1">Estimated Net Revenue</p>
                                 <p className="text-3xl font-serif font-bold text-yellow-700">₹{totalRevenue.toLocaleString('en-IN')}</p>
                             </div>
                             <div className="bg-white p-5 rounded-2xl shadow-md border border-stone-150 relative overflow-hidden">
@@ -145,7 +154,7 @@ const OrderManagement = () => {
                                 <span className="absolute left-3.5 top-3 text-stone-400 text-xs">🔍</span>
                                 <input
                                     type="text"
-                                    placeholder="Search by customer name, mobile number, jewellery product, or order ID..."
+                                    placeholder="Search by customer name, mobile, product, promo code or order ID..."
                                     className="w-full pl-9 pr-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 font-medium"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -190,7 +199,7 @@ const OrderManagement = () => {
                                         <th className="py-4 px-6 text-left">Customer Name</th>
                                         <th className="py-4 px-6 text-left">Mobile</th>
                                         <th className="py-4 px-6 text-left">Purchased Product</th>
-                                        <th className="py-4 px-6 text-left">Price</th>
+                                        <th className="py-4 px-6 text-left">Price Details</th>
                                         <th className="py-4 px-6 text-left">Date Placed</th>
                                         <th className="py-4 px-6 text-center">Status</th>
                                         <th className="py-4 px-6 text-center">Actions</th>
@@ -205,7 +214,24 @@ const OrderManagement = () => {
                                                 <td className="py-4 px-6 font-semibold text-gray-950 text-sm">{order.customerName}</td>
                                                 <td className="py-4 px-6 text-stone-600 text-sm">{order.customerMobile}</td>
                                                 <td className="py-4 px-6 text-gray-900 font-medium text-sm">{order.productName}</td>
-                                                <td className="py-4 px-6 text-yellow-800 font-bold text-sm">₹{Number(order.productPrice).toLocaleString('en-IN')}</td>
+                                                <td className="py-4 px-6 text-sm">
+                                                    {order.discountApplied && Number(order.discountApplied) > 0 ? (
+                                                        <div className="flex flex-col space-y-0.5">
+                                                            <div className="flex items-center gap-1.5">
+                                                                <span className="text-yellow-800 font-bold text-sm">₹{Number(order.finalPrice).toLocaleString('en-IN')}</span>
+                                                                <span className="bg-emerald-50 text-emerald-700 border border-emerald-200/50 text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase tracking-wider">
+                                                                    {order.promoCodeUsed}
+                                                                </span>
+                                                            </div>
+                                                            <div className="flex items-center gap-1.5 text-[10px]">
+                                                                <span className="text-stone-400 font-medium line-through">₹{Number(order.productPrice).toLocaleString('en-IN')}</span>
+                                                                <span className="text-emerald-600 font-semibold">-₹{Number(order.discountApplied).toLocaleString('en-IN')}</span>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-yellow-800 font-bold text-sm">₹{Number(order.productPrice).toLocaleString('en-IN')}</span>
+                                                    )}
+                                                </td>
                                                 <td className="py-4 px-6 text-stone-500 text-xs">{new Date(order.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
                                                 <td className="py-4 px-6 text-center">
                                                     <span className={`inline-block py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-wider ${
