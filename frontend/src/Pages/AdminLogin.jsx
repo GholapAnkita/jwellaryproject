@@ -80,120 +80,148 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 relative p-4">
-      <div className="bg-white p-6 md:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-100">
-        <div className="text-center mb-6">
-          <div className="w-20 h-20 bg-gradient-to-r from-yellow-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-            <span className="text-3xl">👑</span>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 relative p-6 font-sans">
+      <div className="bg-white p-8 md:p-10 rounded-2xl shadow-2xl w-full max-w-md border border-yellow-500/10">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md border border-yellow-500/10">
+            <span className="text-2xl">🔑</span>
           </div>
-          <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+          <h2 className="font-serif text-2xl font-bold bg-gradient-to-r from-stone-900 to-stone-700 bg-clip-text text-transparent">
             Admin Portal
           </h2>
-          <p className="text-sm text-gray-600 mt-2">HandCrafted Jewelry by Ankita</p>
+          <p className="text-xs text-stone-500 mt-2 tracking-wide">HandCrafted Jewelry by Ankita</p>
         </div>
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">
+        
+        <form onSubmit={handleLogin} className="space-y-5">
+          <div>
+            <label className="block text-stone-700 text-[10px] font-bold uppercase tracking-wider mb-2">
               Username
             </label>
             <input
               type="text"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your username"
+              required
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 font-semibold mb-2">
+          
+          <div>
+            <label className="block text-stone-700 text-[10px] font-bold uppercase tracking-wider mb-2">
               Password
             </label>
             <input
               type="password"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
+              required
             />
           </div>
 
-          <div className="text-right mb-6">
+          <div className="text-right">
             <button
               type="button"
               onClick={() => setShowForgotModal(true)}
-              className="text-sm text-yellow-600 hover:text-yellow-700"
+              className="text-xs text-yellow-700 hover:text-amber-800 font-semibold transition"
             >
               Forgot Password?
             </button>
           </div>
 
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+          {error && (
+            <div className="p-3 bg-red-50 text-red-500 rounded-xl text-xs text-center border border-red-100">
+              {error}
+            </div>
+          )}
+          
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-yellow-500 to-pink-500 text-white py-3 rounded-lg hover:from-yellow-600 hover:to-pink-600 transition duration-300 font-bold shadow-lg transform hover:scale-105"
+            className="w-full bg-gradient-to-r from-yellow-500 to-amber-600 text-gray-950 py-3.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition duration-300 font-bold uppercase tracking-wider text-xs shadow-lg border border-yellow-500/15"
           >
-            🔐 Login to Admin
+            🔐 Log In
           </button>
         </form>
       </div>
 
       {/* Forgot Password Modal */}
       {showForgotModal && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-          <div className="bg-white p-4 md:p-6 rounded-lg shadow-xl w-full max-w-md">
-            <h3 className="text-xl font-bold mb-4">Reset Password</h3>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-yellow-500/20">
+            <h3 className="font-serif text-xl font-bold text-gray-950 mb-1">Reset Password</h3>
+            <p className="text-xs text-stone-500 mb-6 pb-2 border-b border-stone-100">Enter your administrator email to proceed.</p>
 
-            {forgotStep === 1 ? (
-              <>
-                <input
-                  type="email"
-                  className="w-full px-4 py-2 border rounded-lg mb-4"
-                  placeholder="Enter your email"
-                  value={forgotEmail}
-                  onChange={(e) => setForgotEmail(e.target.value)}
-                />
-                <button
-                  onClick={handleSendOTP}
-                  className="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 mb-2"
-                >
-                  Send OTP
-                </button>
-              </>
-            ) : (
-              <>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 border rounded-lg mb-2"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                />
-                <input
-                  type="password"
-                  className="w-full px-4 py-2 border rounded-lg mb-4"
-                  placeholder="New Password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <button
-                  onClick={handleResetPassword}
-                  className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 mb-2"
-                >
-                  Reset Password
-                </button>
-              </>
-            )}
+            <div className="space-y-4">
+              {forgotStep === 1 ? (
+                <>
+                  <div>
+                    <label className="block text-stone-700 text-[10px] font-bold uppercase tracking-wider mb-2">Email Address</label>
+                    <input
+                      type="email"
+                      className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300"
+                      placeholder="e.g. name@domain.com"
+                      value={forgotEmail}
+                      onChange={(e) => setForgotEmail(e.target.value)}
+                    />
+                  </div>
+                  <button
+                    onClick={handleSendOTP}
+                    className="w-full bg-yellow-500 text-white py-3 rounded-xl hover:bg-yellow-600 font-bold uppercase tracking-wider text-xs transition border border-yellow-500/15"
+                  >
+                    Send OTP
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-stone-700 text-[10px] font-bold uppercase tracking-wider mb-2">One-Time Password (OTP)</label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 mb-4"
+                      placeholder="Enter 6-digit OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-stone-700 text-[10px] font-bold uppercase tracking-wider mb-2">New Password</label>
+                    <input
+                      type="password"
+                      className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 mb-4"
+                      placeholder="Enter new password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                  </div>
+                  <button
+                    onClick={handleResetPassword}
+                    className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 font-bold uppercase tracking-wider text-xs transition border border-green-500/15"
+                  >
+                    Reset Password
+                  </button>
+                </>
+              )}
 
-            {forgotMessage && (
-              <p className="text-sm text-gray-600 mb-2">{forgotMessage}</p>
-            )}
+              {forgotMessage && (
+                <div className="p-3 bg-stone-50 rounded-xl text-xs text-stone-600 leading-relaxed border border-stone-100">
+                  {forgotMessage}
+                </div>
+              )}
 
-            <button
-              onClick={() => setShowForgotModal(false)}
-              className="w-full bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400"
-            >
-              Cancel
-            </button>
+              <button
+                onClick={() => {
+                  setShowForgotModal(false);
+                  setForgotStep(1);
+                  setForgotMessage("");
+                  setForgotEmail("");
+                }}
+                className="w-full bg-stone-100 text-stone-600 py-3 rounded-xl hover:bg-stone-200 font-bold uppercase tracking-wider text-xs transition"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

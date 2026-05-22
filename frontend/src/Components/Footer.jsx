@@ -1,37 +1,69 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 md:p-8 mt-10">
-      <div className="container mx-auto text-center">
-        <div className="mb-4">
-          <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-500 bg-clip-text text-transparent mb-2">
-            HandCrafted Jewelry by Ankita
-          </h3>
-          <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-pink-500 mx-auto rounded-full"></div>
+    <footer className="bg-gradient-to-b from-gray-950 to-black text-gray-400 border-t border-yellow-500/20 py-12 md:py-16 mt-20 font-sans">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 mb-12">
+          {/* Brand Identity */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="flex items-center space-x-3 mb-4">
+              <img 
+                src={logo} 
+                alt="HandCrafted Jewelry Logo" 
+                className="w-12 h-12 object-contain rounded-full border border-yellow-500/30 bg-gray-900"
+              />
+              <span className="font-serif text-lg md:text-xl font-semibold text-white tracking-wide">
+                HandCrafted by Ankita
+              </span>
+            </div>
+            <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
+              Discover beautiful, handcrafted jewelry pieces made with meticulous detail, high-quality materials, and artistic love. Designed to make you shine on every occasion.
+            </p>
+          </div>
+
+          {/* Quick Nav Links */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <h4 className="font-serif text-white font-medium text-lg tracking-wider mb-4 border-b border-yellow-500/20 pb-1 w-20">
+              Links
+            </h4>
+            <div className="flex flex-col space-y-2 text-sm font-medium">
+              <Link to="/" className="hover:text-yellow-500 transition duration-300">Home</Link>
+              <Link to="/products" className="hover:text-yellow-500 transition duration-300">Our Collection</Link>
+              <Link to="/about" className="hover:text-yellow-500 transition duration-300">Our Story</Link>
+              <Link to="/contact" className="hover:text-yellow-500 transition duration-300">Get In Touch</Link>
+            </div>
+          </div>
+
+          {/* Contact Details */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <h4 className="font-serif text-white font-medium text-lg tracking-wider mb-4 border-b border-yellow-500/20 pb-1 w-28">
+              Contact Ankita
+            </h4>
+            <div className="flex flex-col space-y-3 text-sm">
+              <div className="flex items-center space-x-2 justify-center md:justify-start">
+                <span className="text-yellow-500">📞</span>
+                <span className="text-gray-300 font-semibold tracking-wide">9322779404</span>
+              </div>
+              <div className="flex items-center space-x-2 justify-center md:justify-start">
+                <span className="text-yellow-500">✉️</span>
+                <span className="text-gray-300">ankitagholap100@gamil.com</span>
+              </div>
+              <div className="flex items-center space-x-2 justify-center md:justify-start">
+                <span className="text-yellow-500">📍</span>
+                <span className="text-gray-300">Maharashtra, India</span>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-6">
-          <div className="text-center">
-            <div className="text-2xl mb-2">💎</div>
-            <h4 className="font-semibold mb-1">Premium Quality</h4>
-            <p className="text-sm text-gray-400">Finest materials</p>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl mb-2">🎨</div>
-            <h4 className="font-semibold mb-1">Handcrafted</h4>
-            <p className="text-sm text-gray-400">Made with love</p>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl mb-2">📞</div>
-            <h4 className="font-semibold mb-1">Contact Us</h4>
-            <p className="text-sm text-gray-400">9322779404</p>
-          </div>
-        </div>
-        
-        <div className="border-t border-gray-700 pt-4">
-          <p className="text-sm text-gray-400">
-            © 2025 HandCrafted Jewelry by Ankita. All rights reserved. Made with 💜
+
+        {/* Copywrite Section */}
+        <div className="border-t border-gray-900 pt-8 text-center flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 space-y-4 md:space-y-0">
+          <p>© 2026 HandCrafted Jewelry by Ankita. All rights reserved.</p>
+          <p className="flex items-center">
+            Handcrafted with <span className="text-red-500 mx-1">♥</span> and precision.
           </p>
         </div>
       </div>
