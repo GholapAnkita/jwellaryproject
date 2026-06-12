@@ -46,7 +46,7 @@ const GiftScratchCard = () => {
             {/* Premium Card Modal */}
             {isOpen && (
                 <div className="fixed inset-0 bg-black/75 backdrop-blur-md flex justify-center items-center z-50 p-4">
-                    <div className="bg-gradient-to-b from-stone-900 via-stone-950 to-stone-900 border border-yellow-500/30 p-6 md:p-8 rounded-3xl shadow-2xl w-full max-w-sm relative text-center overflow-hidden animate-scale-up">
+                    <div className="bg-gradient-to-b from-stone-900 via-stone-950 to-stone-900 border border-yellow-500/30 p-5 sm:p-8 rounded-3xl shadow-2xl w-full max-w-[340px] sm:max-w-sm relative text-center overflow-hidden animate-scale-up">
                         {/* Sparkle background effects */}
                         <div className="absolute -top-10 -left-10 w-40 h-40 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none"></div>
                         <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -60,35 +60,35 @@ const GiftScratchCard = () => {
                         </button>
 
                         <div className="mb-4">
-                            <span className="text-4xl">👑</span>
-                            <h3 className="font-serif text-lg font-bold text-amber-400 mt-2 tracking-wide uppercase">HandCrafted Blessing</h3>
-                            <p className="text-stone-400 text-[10px] uppercase tracking-widest font-semibold mt-0.5">Exquisite Artistry by Ankita</p>
+                            <span className="text-3xl sm:text-4xl">👑</span>
+                            <h3 className="font-serif text-base sm:text-lg font-bold text-amber-400 mt-2 tracking-wide uppercase">HandCrafted Blessing</h3>
+                            <p className="text-stone-400 text-[9px] sm:text-[10px] uppercase tracking-widest font-semibold mt-0.5">Exquisite Artistry by Ankita</p>
                         </div>
 
                         {/* Scratch Card Box */}
-                        <div className="bg-stone-950 border border-yellow-500/10 p-5 rounded-2xl relative overflow-hidden min-h-[160px] flex flex-col justify-center items-center shadow-inner">
+                        <div className="bg-stone-950 border border-yellow-500/10 p-4 sm:p-5 rounded-2xl relative overflow-hidden min-h-[150px] flex flex-col justify-center items-center shadow-inner">
                             {!isScracked ? (
                                 <div 
                                     onClick={() => setIsScracked(true)}
-                                    className="absolute inset-1.5 bg-gradient-to-br from-yellow-600 via-amber-500 to-yellow-700 rounded-xl cursor-pointer flex flex-col justify-center items-center p-4 text-center shadow-lg transition duration-500 hover:brightness-110 active:scale-98 select-none"
+                                    className="absolute inset-1 bg-gradient-to-br from-yellow-600 via-amber-500 to-yellow-700 rounded-xl cursor-pointer flex flex-col justify-center items-center p-3 sm:p-4 text-center shadow-lg transition duration-500 hover:brightness-110 active:scale-98 select-none"
                                 >
                                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent opacity-50"></div>
-                                    <span className="text-3xl animate-pulse">✨</span>
-                                    <p className="text-gray-950 font-bold uppercase tracking-widest text-xs mt-2 font-serif">Tap to scratch & unlock</p>
-                                    <p className="text-gray-950/70 text-[9px] font-semibold tracking-wider mt-1 uppercase">Special Festive Offer</p>
+                                    <span className="text-2xl sm:text-3xl animate-pulse">✨</span>
+                                    <p className="text-gray-950 font-bold uppercase tracking-widest text-[10px] sm:text-xs mt-2 font-serif">Tap to scratch & unlock</p>
+                                    <p className="text-gray-950/70 text-[8px] sm:text-[9px] font-semibold tracking-wider mt-1 uppercase">Special Festive Offer</p>
                                 </div>
                             ) : (
-                                <div className="text-center p-3 animate-fade-in">
+                                <div className="text-center p-2 animate-fade-in w-full">
                                     {/* Particle Sparkle Emulation */}
-                                    <div className="text-2xl mb-1 animate-bounce">🎊</div>
-                                    <p className="text-stone-300 text-xs font-serif leading-relaxed italic mb-4">
+                                    <div className="text-xl sm:text-2xl mb-1 animate-bounce">🎊</div>
+                                    <p className="text-stone-300 text-[11px] sm:text-xs font-serif leading-relaxed italic mb-3">
                                         "{settings.promoText}"
                                     </p>
-                                    <div className="bg-yellow-500/10 border border-dashed border-yellow-500/30 py-2 px-4 rounded-xl flex justify-between items-center w-full max-w-[240px] mx-auto">
-                                        <span className="font-mono text-sm font-bold text-yellow-500 uppercase tracking-widest">{couponCode}</span>
+                                    <div className="bg-yellow-500/10 border border-dashed border-yellow-500/30 py-1.5 px-3 rounded-xl flex justify-between items-center w-full max-w-[260px] mx-auto gap-2">
+                                        <span className="font-mono text-xs sm:text-sm font-bold text-yellow-500 uppercase tracking-widest truncate">{couponCode}</span>
                                         <button
                                             onClick={handleCopy}
-                                            className="bg-yellow-500 hover:bg-yellow-600 text-gray-950 text-[9px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow transition"
+                                            className="bg-yellow-500 hover:bg-yellow-600 text-gray-950 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2.5 sm:px-3 py-1.5 rounded-lg shadow transition whitespace-nowrap"
                                         >
                                             {copied ? "Copied! ✓" : "Copy Code"}
                                         </button>
@@ -97,7 +97,7 @@ const GiftScratchCard = () => {
                             )}
                         </div>
 
-                        <p className="text-[9px] text-stone-500 mt-4 leading-relaxed font-sans uppercase tracking-wider">
+                        <p className="text-[8px] sm:text-[9px] text-stone-500 mt-4 leading-relaxed font-sans uppercase tracking-wider">
                             *Handmade with love. Apply coupon at checkout to claim premium discount.
                         </p>
                     </div>
