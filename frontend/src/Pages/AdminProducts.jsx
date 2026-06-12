@@ -24,7 +24,8 @@ const AdminProducts = () => {
   const [promoForm, setPromoForm] = useState({
     promoEnabled: true,
     promoText: "",
-    promoTheme: "gold"
+    promoTheme: "gold",
+    theme: "gold"
   });
   const [saveStatus, setSaveStatus] = useState("");
 
@@ -33,7 +34,8 @@ const AdminProducts = () => {
       setPromoForm({
         promoEnabled: settings.promoEnabled ?? true,
         promoText: settings.promoText ?? "",
-        promoTheme: settings.promoTheme ?? "gold"
+        promoTheme: settings.promoTheme ?? "gold",
+        theme: settings.theme ?? "gold"
       });
     }
   }, [settings]);
@@ -43,10 +45,10 @@ const AdminProducts = () => {
     setSaveStatus("Publishing updates to live store...");
     const success = await updateSettings(promoForm);
     if (success) {
-      setSaveStatus("Live banner updated successfully! ✨");
+      setSaveStatus("Live store settings updated successfully! ✨");
       setTimeout(() => setSaveStatus(""), 4000);
     } else {
-      setSaveStatus("Failed to update banner. Please try again.");
+      setSaveStatus("Failed to update settings. Please try again.");
     }
   };
 
@@ -191,19 +193,19 @@ const AdminProducts = () => {
           </div>
         </div>
 
-        {/* Promotional Banner Control Widget */}
+        {/* Website Settings & Theme Control Widget */}
         <div className="bg-white border border-yellow-500/10 rounded-2xl shadow-xl p-6 md:p-8 mt-10">
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-stone-100">
-            <span className="text-2xl">✨</span>
+            <span className="text-2xl">⚙️</span>
             <div>
-              <h2 className="font-serif text-xl font-bold text-gray-950">Festive Offers & Sale Banners</h2>
-              <p className="text-stone-400 text-[10px] uppercase tracking-wider font-bold">Live website header announcements</p>
+              <h2 className="font-serif text-xl font-bold text-gray-950">Website Settings & Themes</h2>
+              <p className="text-stone-400 text-[10px] uppercase tracking-wider font-bold">Control site header announcements and color theme</p>
             </div>
           </div>
 
-          <form onSubmit={handlePromoSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-end">
-            <div className="lg:col-span-2 space-y-4">
-              <div className="flex flex-col sm:flex-row gap-4">
+          <form onSubmit={handlePromoSubmit} className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-end">
+            <div className="lg:col-span-3 space-y-4">
+              <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                   <label className="block text-stone-750 text-[10px] font-bold uppercase tracking-wider mb-2">
                     Announcement Banner Text
@@ -213,14 +215,14 @@ const AdminProducts = () => {
                     value={promoForm.promoText}
                     onChange={(e) => setPromoForm({ ...promoForm, promoText: e.target.value })}
                     className="w-full px-4 py-2.5 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 font-medium"
-                    placeholder="e.g. ✨ Special Festive Offer: 15% OFF on premium jewellery collections! Use code: FESTIVE15 💖"
+                    placeholder="e.g. ✨ Special Festive Offer: 15% OFF on premium pearl collections! Use code: FESTIVE15 💖"
                     required
                   />
                 </div>
                 
-                <div className="w-full sm:w-56">
+                <div className="w-full md:w-48">
                   <label className="block text-stone-750 text-[10px] font-bold uppercase tracking-wider mb-2">
-                    Banner Styling Theme
+                    Banner Theme
                   </label>
                   <select
                     value={promoForm.promoTheme}
@@ -231,6 +233,28 @@ const AdminProducts = () => {
                     <option value="maroon">🏮 Festive Royal Maroon</option>
                     <option value="red">🌹 Romantic Crimson Red</option>
                     <option value="black">🖤 Sleek Premium Charcoal</option>
+                  </select>
+                </div>
+
+                <div className="w-full md:w-48">
+                  <label className="block text-stone-750 text-[10px] font-bold uppercase tracking-wider mb-2">
+                    Website Color Theme
+                  </label>
+                  <select
+                    value={promoForm.theme}
+                    onChange={(e) => setPromoForm({ ...promoForm, theme: e.target.value })}
+                    className="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 font-bold text-stone-600 cursor-pointer"
+                  >
+                    <option value="gold">👑 Luxury Amber Gold</option>
+                    <option value="pink">🌸 Soft Rose Pink</option>
+                    <option value="colorful">🔮 Vibrant Royal Violet</option>
+                    <option value="emerald">🍃 Sleek Emerald Mint</option>
+                    <option value="cosmic">🌌 Vibrant Cosmic Neon</option>
+                    <option value="sunset">🌅 Sunset Coral Glow</option>
+                    <option value="lavender">🎆 Midnight Lavender</option>
+                    <option value="ruby">🌹 Romantic Ruby Red</option>
+                    <option value="hotpink">💖 Vibrant Hot Pink</option>
+                    <option value="pastel">🦄 Pastel Candy Dream</option>
                   </select>
                 </div>
               </div>
@@ -246,7 +270,7 @@ const AdminProducts = () => {
                   className="w-4 h-4 rounded accent-yellow-600 cursor-pointer"
                 />
                 <label htmlFor="promoEnabled" className="text-stone-700 text-[10px] font-bold uppercase tracking-wider cursor-pointer select-none">
-                  Display Banner
+                  Show Banner
                 </label>
               </div>
 
@@ -254,7 +278,7 @@ const AdminProducts = () => {
                 type="submit"
                 className="bg-stone-900 text-white hover:bg-stone-800 px-6 py-2.5 rounded-xl transition duration-300 font-bold uppercase tracking-widest text-[10px] border border-stone-800 shadow-md w-full sm:w-auto"
               >
-                Publish Banner
+                Save Settings
               </button>
             </div>
           </form>
