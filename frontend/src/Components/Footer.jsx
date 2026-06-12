@@ -43,10 +43,7 @@ const Footer = () => {
               Contact Ankita
             </h4>
             <div className="flex flex-col space-y-3 text-sm">
-              <div className="flex items-center space-x-2 justify-center md:justify-start">
-                <span className="text-yellow-500">📞</span>
-                <span className="text-gray-300 font-semibold tracking-wide">9322779404</span>
-              </div>
+             
               <div className="flex items-center space-x-2 justify-center md:justify-start">
                 <span className="text-yellow-500">✉️</span>
                 <span className="text-gray-300">ankitagholap100@gamil.com</span>
