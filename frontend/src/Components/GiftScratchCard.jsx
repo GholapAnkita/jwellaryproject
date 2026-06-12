@@ -81,8 +81,8 @@ const GiftScratchCard = () => {
                                 <div className="text-center p-2 animate-fade-in w-full">
                                     {/* Particle Sparkle Emulation */}
                                     <div className="text-xl sm:text-2xl mb-1 animate-bounce">🎊</div>
-                                    <p className="text-stone-300 text-[11px] sm:text-xs font-serif leading-relaxed italic mb-3">
-                                        "{settings.promoText}"
+                                    <p className="text-stone-200 text-xs sm:text-sm font-sans font-semibold leading-relaxed mb-3 px-1">
+                                        {settings.promoText}
                                     </p>
                                     <div className="bg-yellow-500/10 border border-dashed border-yellow-500/30 py-1.5 px-3 rounded-xl flex justify-between items-center w-full max-w-[260px] mx-auto gap-2">
                                         <span className="font-mono text-xs sm:text-sm font-bold text-yellow-500 uppercase tracking-widest truncate">{couponCode}</span>
