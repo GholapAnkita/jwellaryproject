@@ -59,9 +59,15 @@ const Footer = () => {
         {/* Copywrite Section */}
         <div className="border-t border-gray-900 pt-8 text-center flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 space-y-4 md:space-y-0">
           <p>© 2026 HandCrafted Jewellery by Ankita. All rights reserved.</p>
-          <p className="flex items-center">
-            Handcrafted with <span className="text-red-500 mx-1">♥</span> and precision.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p className="flex items-center justify-center">
+              Handcrafted with <span className="text-red-500 mx-1">♥</span> and precision.
+            </p>
+            <span className="hidden sm:inline text-gray-800">|</span>
+            <Link to="/admin" className="text-gray-600 hover:text-yellow-500/80 transition duration-300 font-medium py-1 px-2">
+              Admin Login
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
