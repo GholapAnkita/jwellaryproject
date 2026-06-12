@@ -47,31 +47,6 @@ const About = () => {
           </div>
         </div>
 
-        {/* Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white/95 border border-yellow-500/10 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
-            <div className="text-3xl mb-3 text-amber-600">✍️</div>
-            <h3 className="font-serif font-bold text-gray-900 text-base mb-2">Bespoke Artistry</h3>
-            <p className="text-stone-500 text-xs leading-relaxed">
-              We design specifically around your dreams, blending heritage techniques with modern aesthetic palettes.
-            </p>
-          </div>
-          <div className="bg-white/95 border border-yellow-500/10 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
-            <div className="text-3xl mb-3 text-amber-600">🌱</div>
-            <h3 className="font-serif font-bold text-gray-900 text-base mb-2">Ethical & Conscious</h3>
-            <p className="text-stone-500 text-xs leading-relaxed">
-              We carefully source each gemstone and metal alloy responsibly, preserving the purity of nature's elements.
-            </p>
-          </div>
-          <div className="bg-white/95 border border-yellow-500/10 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
-            <div className="text-3xl mb-3 text-amber-600">✨</div>
-            <h3 className="font-serif font-bold text-gray-900 text-base mb-2">Artisan Heritage</h3>
-            <p className="text-stone-500 text-xs leading-relaxed">
-              By supporting local skills and custom hand-weaving, we keep beautiful traditional jewellery techniques alive.
-            </p>
-          </div>
-        </div>
-
         {/* Closing Quote Banner */}
         <div className="relative overflow-hidden rounded-3xl bg-gray-950 p-8 sm:p-12 border border-yellow-500/30 text-white shadow-2xl">
           {/* Subtle design gradients */}
