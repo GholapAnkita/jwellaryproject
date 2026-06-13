@@ -62,7 +62,7 @@ const AdminEnquiries = () => {
     });
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 p-6 md:p-10 font-sans">
+        <div className="min-h-screen bg-linear-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 p-6 md:p-10 font-sans">
             <div className="max-w-6xl mx-auto">
                 
                 {/* Executive Header */}
@@ -112,7 +112,7 @@ const AdminEnquiries = () => {
                     {/* Analytics Row */}
                     {!loading && enquiries.length > 0 && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                            <div className="bg-gradient-to-br from-stone-900 to-stone-950 text-white p-5 rounded-2xl shadow-md border border-stone-800 relative overflow-hidden">
+                            <div className="bg-linear-to-br from-stone-900 to-stone-950 text-white p-5 rounded-2xl shadow-md border border-stone-800 relative overflow-hidden">
                                 <div className="absolute right-3 bottom-1 text-5xl opacity-10">✉️</div>
                                 <p className="text-[10px] uppercase tracking-widest text-amber-400 font-bold mb-1">Total Enquiries</p>
                                 <p className="text-3xl font-serif font-bold">{totalEnquiries}</p>

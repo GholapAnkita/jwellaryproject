@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import ScrollToTop from "./Components/ScrollToTop";
 import Navbar from "./Components/Navbar";
 import PromoBanner from "./Components/PromoBanner";
 import GiftScratchCard from "./Components/GiftScratchCard";
@@ -24,6 +25,7 @@ function App() {
   return (
     <ShopProvider>
       <Router>
+        <ScrollToTop />
         <PromoBanner />
         <Navbar />
         <GiftScratchCard />

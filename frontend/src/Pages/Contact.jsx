@@ -38,16 +38,16 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 flex items-center justify-center p-6 md:p-12 font-sans">
+    <div className="min-h-screen bg-linear-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 flex items-center justify-center p-6 md:p-12 font-sans">
       <div className="bg-white/80 border border-yellow-500/15 p-8 md:p-12 rounded-2xl shadow-xl backdrop-blur-sm max-w-lg w-full">
         <div className="text-center mb-8">
           <span className="text-[10px] uppercase tracking-widest font-bold text-yellow-700 bg-yellow-500/10 px-3 py-1 rounded-full inline-block mb-3 border border-yellow-500/10">
             Get in touch
           </span>
-          <h1 className="font-serif text-3xl font-bold bg-gradient-to-r from-yellow-700 via-amber-600 to-yellow-800 bg-clip-text text-transparent">
+          <h1 className="font-serif text-3xl font-bold bg-linear-to-r from-yellow-700 via-amber-600 to-yellow-800 bg-clip-text text-transparent">
             Contact Ankita
           </h1>
-          <div className="w-12 h-[2px] bg-gradient-to-r from-yellow-600 to-amber-500 mx-auto rounded-full mt-3"></div>
+          <div className="w-12 h-0.5 bg-linear-to-r from-yellow-600 to-amber-500 mx-auto rounded-full mt-3"></div>
         </div>
 
         {submitted && (
@@ -107,7 +107,7 @@ const Contact = () => {
 
           <button
             type="submit"
-            className="bg-gradient-to-r from-yellow-500 to-amber-600 text-gray-950 px-8 py-3.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition duration-300 font-bold uppercase tracking-widest text-[10px] w-full shadow-lg border border-yellow-500/15 mt-4"
+            className="bg-linear-to-r from-yellow-500 to-amber-600 text-gray-950 px-8 py-3.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition duration-300 font-bold uppercase tracking-widest text-[10px] w-full shadow-lg border border-yellow-500/15 mt-4"
           >
             ✉️ Send Message to Ankita
           </button>

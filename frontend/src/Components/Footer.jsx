@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-gray-950 to-black text-gray-400 border-t border-yellow-500/20 py-12 md:py-16 mt-20 font-sans">
+    <footer className="bg-linear-to-b from-gray-950 to-black text-gray-400 border-t border-yellow-500/20 py-12 md:py-16 mt-20 font-sans">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 mb-12">
           {/* Brand Identity */}
@@ -43,10 +43,7 @@ const Footer = () => {
               Contact Ankita
             </h4>
             <div className="flex flex-col space-y-3 text-sm">
-              <div className="flex items-center space-x-2 justify-center md:justify-start">
-                <span className="text-yellow-500">📞</span>
-                <span className="text-gray-300 font-semibold tracking-wide">9322779404</span>
-              </div>
+             
               <div className="flex items-center space-x-2 justify-center md:justify-start">
                 <span className="text-yellow-500">✉️</span>
                 <span className="text-gray-300">ankitagholap100@gamil.com</span>
@@ -62,9 +59,15 @@ const Footer = () => {
         {/* Copywrite Section */}
         <div className="border-t border-gray-900 pt-8 text-center flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 space-y-4 md:space-y-0">
           <p>© 2026 HandCrafted Jewellery by Ankita. All rights reserved.</p>
-          <p className="flex items-center">
-            Handcrafted with <span className="text-red-500 mx-1">♥</span> and precision.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p className="flex items-center justify-center">
+              Handcrafted with <span className="text-red-500 mx-1">♥</span> and precision.
+            </p>
+            <span className="hidden sm:inline text-gray-800">|</span>
+            <Link to="/admin" className="text-gray-600 hover:text-yellow-500/80 transition duration-300 font-medium py-1 px-2">
+              Admin Login
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

@@ -16,9 +16,9 @@ const ProductCard = ({ product }) => {
       <div className="p-4 md:p-5 text-center">
         <h2 className="font-bold text-base md:text-lg text-gray-800 mb-2">{product.name}</h2>
         <div className="flex items-center justify-center mb-3">
-          <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-yellow-600 to-pink-600 bg-clip-text text-transparent">₹{product.price}</span>
+          <span className="text-2xl md:text-3xl font-bold bg-linear-to-r from-yellow-600 to-pink-600 bg-clip-text text-transparent">₹{product.price}</span>
         </div>
-        <button className="w-full bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-4 py-2 md:py-3 rounded-full hover:from-yellow-600 hover:to-pink-600 transition duration-300 transform hover:scale-105 font-semibold shadow-md">
+        <button className="w-full bg-linear-to-r from-yellow-500 to-pink-500 text-white px-4 py-2 md:py-3 rounded-full hover:from-yellow-600 hover:to-pink-600 transition duration-300 transform hover:scale-105 font-semibold shadow-md">
           🛍️ Add to Cart
         </button>
       </div>

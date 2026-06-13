@@ -24,7 +24,8 @@ const AdminProducts = () => {
   const [promoForm, setPromoForm] = useState({
     promoEnabled: true,
     promoText: "",
-    promoTheme: "gold"
+    promoTheme: "gold",
+    theme: "gold"
   });
   const [saveStatus, setSaveStatus] = useState("");
 
@@ -33,7 +34,8 @@ const AdminProducts = () => {
       setPromoForm({
         promoEnabled: settings.promoEnabled ?? true,
         promoText: settings.promoText ?? "",
-        promoTheme: settings.promoTheme ?? "gold"
+        promoTheme: settings.promoTheme ?? "gold",
+        theme: settings.theme ?? "gold"
       });
     }
   }, [settings]);
@@ -43,10 +45,10 @@ const AdminProducts = () => {
     setSaveStatus("Publishing updates to live store...");
     const success = await updateSettings(promoForm);
     if (success) {
-      setSaveStatus("Live banner updated successfully! ✨");
+      setSaveStatus("Live store settings updated successfully! ✨");
       setTimeout(() => setSaveStatus(""), 4000);
     } else {
-      setSaveStatus("Failed to update banner. Please try again.");
+      setSaveStatus("Failed to update settings. Please try again.");
     }
   };
 
@@ -90,51 +92,51 @@ const AdminProducts = () => {
     }
     setShowModal(false);
   };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 p-6 md:p-10 font-sans">
+    <div className="min-h-screen bg-linear-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 p-4 sm:p-6 md:p-10 font-sans">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8 pb-4 border-b border-stone-200">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-4 border-b border-stone-200">
           <div>
             <span className="text-[10px] uppercase tracking-widest font-bold text-yellow-700 bg-yellow-500/10 px-3 py-1 rounded-full inline-block mb-2 border border-yellow-500/10">
               Management Portal
             </span>
-            <h1 className="font-serif text-3xl font-bold text-gray-950">Admin Dashboard</h1>
+            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-gray-950">Admin Dashboard</h1>
           </div>
           <button
             onClick={handleLogout}
-            className="bg-transparent border border-red-500/50 hover:bg-red-500 hover:text-white text-red-500 transition px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm"
+            className="bg-transparent border border-red-500/50 hover:bg-red-500 hover:text-white text-red-500 transition px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm w-full sm:w-auto text-center"
           >
             Logout
           </button>
         </div>
 
-        <div className="bg-white border border-yellow-500/10 rounded-2xl shadow-xl p-6 md:p-8">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-stone-100">
-            <div className="flex flex-wrap gap-2.5 items-center">
-              <h2 className="font-serif text-xl font-bold text-gray-950 mr-4">Manage Products</h2>
+        <div className="bg-white border border-yellow-500/10 rounded-2xl shadow-xl p-4 sm:p-6 md:p-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 pb-6 border-b border-stone-100">
+            <div className="flex flex-wrap gap-2 items-center w-full lg:w-auto">
+              <h2 className="font-serif text-lg sm:text-xl font-bold text-gray-950 mr-2">Manage Products</h2>
               <button
                 onClick={() => navigate("/admin-orders")}
-                className="bg-stone-900 text-white hover:bg-stone-800 transition px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider"
+                className="bg-stone-900 text-white hover:bg-stone-800 transition px-3 py-2 rounded-lg text-[10px] sm:text-xs font-semibold uppercase tracking-wider flex-1 sm:flex-none text-center"
               >
                 View Orders
               </button>
               <button
                 onClick={() => navigate("/admin-enquiries")}
-                className="bg-amber-600/10 text-amber-700 border border-amber-600/20 hover:bg-amber-600/20 transition px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider"
+                className="bg-amber-600/10 text-amber-700 border border-amber-600/20 hover:bg-amber-600/20 transition px-3 py-2 rounded-lg text-[10px] sm:text-xs font-semibold uppercase tracking-wider flex-1 sm:flex-none text-center"
               >
                 Enquiries
               </button>
             </div>
             <button
               onClick={openAddModal}
-              className="bg-gradient-to-r from-yellow-500 to-amber-600 text-gray-950 px-5 py-2.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-md w-full sm:w-auto"
+              className="bg-linear-to-r from-yellow-500 to-amber-600 text-gray-950 px-5 py-2.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-md w-full lg:w-auto"
             >
               + Add Product
             </button>
           </div>
 
-          <div className="overflow-x-auto">
+          {/* Desktop Table View */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="min-w-full bg-white border border-stone-100 rounded-xl overflow-hidden">
               <thead>
                 <tr className="bg-stone-50 border-b border-stone-100 text-stone-700 uppercase text-[10px] tracking-wider font-bold">
@@ -189,21 +191,67 @@ const AdminProducts = () => {
               </tbody>
             </table>
           </div>
+
+          {/* Mobile Grid/Card View */}
+          <div className="md:hidden space-y-4">
+            {products.map((product) => (
+              <div 
+                key={product.id} 
+                className="bg-white border border-stone-150 rounded-2xl p-4 flex flex-col gap-3 shadow-sm hover:shadow-md transition"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-16 h-16 object-cover rounded-xl border border-stone-100 cursor-pointer"
+                    onClick={() => handleImageClick(product.image)}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-gray-950 text-sm leading-tight truncate">{product.name}</h3>
+                    <p className="text-yellow-700 font-bold text-sm mt-0.5">₹{product.price.toLocaleString('en-IN')}</p>
+                    <span className="inline-block bg-stone-100 text-stone-600 text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full border border-stone-200/50 mt-1">
+                      {product.category || "General"}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="flex gap-2 pt-2 border-t border-stone-100 mt-1">
+                  <button
+                    onClick={() => openEditModal(product)}
+                    className="flex-1 bg-stone-50 hover:bg-yellow-500 hover:text-gray-950 border border-stone-200/60 text-stone-600 transition duration-300 text-xs font-semibold py-2 rounded-lg text-center"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteProduct(product.id)}
+                    className="flex-1 bg-red-50 hover:bg-red-500 hover:text-white text-red-500 transition duration-300 text-xs font-semibold py-2 rounded-lg text-center"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+            {products.length === 0 && (
+              <div className="text-center py-10 text-stone-400 font-light text-sm">
+                No products available. Get started by adding some!
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Promotional Banner Control Widget */}
+        {/* Website Settings & Theme Control Widget */}
         <div className="bg-white border border-yellow-500/10 rounded-2xl shadow-xl p-6 md:p-8 mt-10">
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-stone-100">
-            <span className="text-2xl">✨</span>
+            <span className="text-2xl">⚙️</span>
             <div>
-              <h2 className="font-serif text-xl font-bold text-gray-950">Festive Offers & Sale Banners</h2>
-              <p className="text-stone-400 text-[10px] uppercase tracking-wider font-bold">Live website header announcements</p>
+              <h2 className="font-serif text-xl font-bold text-gray-950">Website Settings & Themes</h2>
+              <p className="text-stone-400 text-[10px] uppercase tracking-wider font-bold">Control site header announcements and color theme</p>
             </div>
           </div>
 
-          <form onSubmit={handlePromoSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-end">
-            <div className="lg:col-span-2 space-y-4">
-              <div className="flex flex-col sm:flex-row gap-4">
+          <form onSubmit={handlePromoSubmit} className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-end">
+            <div className="lg:col-span-3 space-y-4">
+              <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                   <label className="block text-stone-750 text-[10px] font-bold uppercase tracking-wider mb-2">
                     Announcement Banner Text
@@ -213,14 +261,14 @@ const AdminProducts = () => {
                     value={promoForm.promoText}
                     onChange={(e) => setPromoForm({ ...promoForm, promoText: e.target.value })}
                     className="w-full px-4 py-2.5 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 font-medium"
-                    placeholder="e.g. ✨ Special Festive Offer: 15% OFF on premium jewellery collections! Use code: FESTIVE15 💖"
+                    placeholder="e.g. ✨ Special Festive Offer: 15% OFF on premium pearl collections! Use code: FESTIVE15 💖"
                     required
                   />
                 </div>
                 
-                <div className="w-full sm:w-56">
+                <div className="w-full md:w-48">
                   <label className="block text-stone-750 text-[10px] font-bold uppercase tracking-wider mb-2">
-                    Banner Styling Theme
+                    Banner Theme
                   </label>
                   <select
                     value={promoForm.promoTheme}
@@ -231,6 +279,28 @@ const AdminProducts = () => {
                     <option value="maroon">🏮 Festive Royal Maroon</option>
                     <option value="red">🌹 Romantic Crimson Red</option>
                     <option value="black">🖤 Sleek Premium Charcoal</option>
+                  </select>
+                </div>
+
+                <div className="w-full md:w-48">
+                  <label className="block text-stone-750 text-[10px] font-bold uppercase tracking-wider mb-2">
+                    Website Color Theme
+                  </label>
+                  <select
+                    value={promoForm.theme}
+                    onChange={(e) => setPromoForm({ ...promoForm, theme: e.target.value })}
+                    className="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition duration-300 font-bold text-stone-600 cursor-pointer"
+                  >
+                    <option value="gold">👑 Luxury Amber Gold</option>
+                    <option value="pink">🌸 Soft Rose Pink</option>
+                    <option value="colorful">🔮 Vibrant Royal Violet</option>
+                    <option value="emerald">🍃 Sleek Emerald Mint</option>
+                    <option value="cosmic">🌌 Vibrant Cosmic Neon</option>
+                    <option value="sunset">🌅 Sunset Coral Glow</option>
+                    <option value="lavender">🎆 Midnight Lavender</option>
+                    <option value="ruby">🌹 Romantic Ruby Red</option>
+                    <option value="hotpink">💖 Vibrant Hot Pink</option>
+                    <option value="pastel">🦄 Pastel Candy Dream</option>
                   </select>
                 </div>
               </div>
@@ -246,7 +316,7 @@ const AdminProducts = () => {
                   className="w-4 h-4 rounded accent-yellow-600 cursor-pointer"
                 />
                 <label htmlFor="promoEnabled" className="text-stone-700 text-[10px] font-bold uppercase tracking-wider cursor-pointer select-none">
-                  Display Banner
+                  Show Banner
                 </label>
               </div>
 
@@ -254,7 +324,7 @@ const AdminProducts = () => {
                 type="submit"
                 className="bg-stone-900 text-white hover:bg-stone-800 px-6 py-2.5 rounded-xl transition duration-300 font-bold uppercase tracking-widest text-[10px] border border-stone-800 shadow-md w-full sm:w-auto"
               >
-                Publish Banner
+                Save Settings
               </button>
             </div>
           </form>
@@ -375,7 +445,7 @@ const AdminProducts = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-yellow-500 to-amber-600 text-gray-950 px-6 py-2.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-lg"
+                  className="bg-linear-to-r from-yellow-500 to-amber-600 text-gray-950 px-6 py-2.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-lg"
                 >
                   {isEditing ? "Update Product" : "Save Product"}
                 </button>

@@ -80,13 +80,13 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 relative p-6 font-sans">
+    <div className="flex justify-center items-center min-h-screen bg-linear-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 relative p-6 font-sans">
       <div className="bg-white p-8 md:p-10 rounded-2xl shadow-2xl w-full max-w-md border border-yellow-500/10">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md border border-yellow-500/10">
+          <div className="w-16 h-16 bg-linear-to-br from-yellow-500 to-amber-600 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md border border-yellow-500/10">
             <span className="text-2xl">🔑</span>
           </div>
-          <h2 className="font-serif text-2xl font-bold bg-gradient-to-r from-stone-900 to-stone-700 bg-clip-text text-transparent">
+          <h2 className="font-serif text-2xl font-bold bg-linear-to-r from-stone-900 to-stone-700 bg-clip-text text-transparent">
             Admin Portal
           </h2>
           <p className="text-xs text-stone-500 mt-2 tracking-wide">HandCrafted Jewellery by Ankita</p>
@@ -139,7 +139,7 @@ const AdminLogin = () => {
           
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-yellow-500 to-amber-600 text-gray-950 py-3.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition duration-300 font-bold uppercase tracking-wider text-xs shadow-lg border border-yellow-500/15"
+            className="w-full bg-linear-to-r from-yellow-500 to-amber-600 text-gray-950 py-3.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition duration-300 font-bold uppercase tracking-wider text-xs shadow-lg border border-yellow-500/15"
           >
             🔐 Log In
           </button>

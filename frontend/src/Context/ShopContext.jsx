@@ -11,7 +11,8 @@ export const ShopProvider = ({ children }) => {
     const [settings, setSettings] = useState({
         promoEnabled: true,
         promoText: "✨ Special Festive Sale: 15% OFF on our premium pearl collections! Use code: FESTIVE15 💖",
-        promoTheme: "gold"
+        promoTheme: "gold",
+        theme: "gold"
     });
 
     const API_URL = import.meta.env.VITE_API_URL;
@@ -35,12 +36,20 @@ export const ShopProvider = ({ children }) => {
         try {
             const response = await axios.get(`${API_URL}/api/settings`);
             if (response.data && !Array.isArray(response.data)) {
-                setSettings(response.data);
+                setSettings(prev => ({ ...prev, ...response.data }));
             }
         } catch (error) {
             console.error("Error fetching settings:", error);
         }
     };
+
+    useEffect(() => {
+        if (settings && settings.theme) {
+            document.documentElement.setAttribute("data-theme", settings.theme);
+        } else {
+            document.documentElement.setAttribute("data-theme", "gold");
+        }
+    }, [settings]);
 
     useEffect(() => {
         localStorage.setItem("isAdminLoggedIn", isAdminLoggedIn);
