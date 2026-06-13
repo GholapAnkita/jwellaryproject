@@ -14,7 +14,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 py-12 sm:py-20 px-4 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 py-12 sm:py-20 px-4 font-sans relative overflow-hidden">
       {/* Background elegant gold decorative elements */}
       <div className="absolute top-20 left-10 w-32 h-32 bg-yellow-400/10 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-20 right-10 w-44 h-44 bg-amber-400/10 rounded-full blur-3xl animate-pulse"></div>
@@ -25,10 +25,10 @@ const About = () => {
           <span className="text-[10px] uppercase tracking-widest font-bold text-yellow-750 bg-yellow-500/10 px-4 py-1.5 rounded-full inline-block mb-3 border border-yellow-500/20">
             About Us
           </span>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight mb-2 bg-gradient-to-r from-yellow-700 via-amber-600 to-yellow-800 bg-clip-text text-transparent py-1">
+          <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight mb-2 bg-linear-to-r from-yellow-700 via-amber-600 to-yellow-800 bg-clip-text text-transparent py-1">
             HandCrafted by Ankita
           </h1>
-          <div className="w-16 h-[2px] bg-gradient-to-r from-yellow-600 to-amber-500 mx-auto rounded-full mt-3"></div>
+          <div className="w-16 h-0.5 bg-linear-to-r from-yellow-600 to-amber-500 mx-auto rounded-full mt-3"></div>
         </div>
 
         {/* Story Section */}
@@ -77,7 +77,7 @@ const About = () => {
         <div className="text-center">
           <Link
             to="/contact"
-            className="inline-block bg-gradient-to-r from-yellow-500 to-amber-600 text-gray-950 px-8 py-3 rounded-full hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-lg"
+            className="inline-block bg-linear-to-r from-yellow-500 to-amber-600 text-gray-950 px-8 py-3 rounded-full hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-lg"
           >
             ✉️ Contact Us
           </Link>

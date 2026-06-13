@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-gray-950 to-black text-gray-400 border-t border-yellow-500/20 py-12 md:py-16 mt-20 font-sans">
+    <footer className="bg-linear-to-b from-gray-950 to-black text-gray-400 border-t border-yellow-500/20 py-12 md:py-16 mt-20 font-sans">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 mb-12">
           {/* Brand Identity */}

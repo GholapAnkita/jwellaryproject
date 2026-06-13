@@ -23,7 +23,7 @@ const Navbar = () => {
           alt="HandCrafted Jewellery Logo" 
           className="w-10 h-10 object-contain rounded-full border border-yellow-500/40 bg-gray-900 group-hover:scale-105 transition duration-300"
         />
-        <span className="font-serif text-lg sm:text-xl md:text-2xl font-semibold tracking-wide bg-gradient-to-r from-yellow-500 via-amber-300 to-yellow-600 bg-clip-text text-transparent transition">
+        <span className="font-serif text-lg sm:text-xl md:text-2xl font-semibold tracking-wide bg-linear-to-r from-yellow-500 via-amber-300 to-yellow-600 bg-clip-text text-transparent transition">
           HandCrafted by Ankita
         </span>
       </Link>
@@ -53,7 +53,7 @@ const Navbar = () => {
             >
               {link.name}
               {isActive && (
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full animate-pulse" />
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-linear-to-r from-yellow-400 to-yellow-600 rounded-full animate-pulse" />
               )}
             </Link>
           );

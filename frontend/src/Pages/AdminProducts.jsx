@@ -93,7 +93,7 @@ const AdminProducts = () => {
     setShowModal(false);
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 p-4 sm:p-6 md:p-10 font-sans">
+    <div className="min-h-screen bg-linear-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 p-4 sm:p-6 md:p-10 font-sans">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-4 border-b border-stone-200">
           <div>
@@ -129,7 +129,7 @@ const AdminProducts = () => {
             </div>
             <button
               onClick={openAddModal}
-              className="bg-gradient-to-r from-yellow-500 to-amber-600 text-gray-950 px-5 py-2.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-md w-full lg:w-auto"
+              className="bg-linear-to-r from-yellow-500 to-amber-600 text-gray-950 px-5 py-2.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-md w-full lg:w-auto"
             >
               + Add Product
             </button>
@@ -445,7 +445,7 @@ const AdminProducts = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-yellow-500 to-amber-600 text-gray-950 px-6 py-2.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-lg"
+                  className="bg-linear-to-r from-yellow-500 to-amber-600 text-gray-950 px-6 py-2.5 rounded-xl hover:from-yellow-600 hover:to-amber-700 transition font-bold uppercase tracking-widest text-xs border border-yellow-500/10 shadow-lg"
                 >
                   {isEditing ? "Update Product" : "Save Product"}
                 </button>

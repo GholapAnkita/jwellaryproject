@@ -112,15 +112,15 @@ const Products = () => {
   };
 
   return (
-    <div className="container mx-auto py-12 sm:py-16 px-6 bg-gradient-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 min-h-screen font-sans">
+    <div className="container mx-auto py-12 sm:py-16 px-6 bg-linear-to-br from-stone-50 via-stone-100/40 to-yellow-50/15 min-h-screen font-sans">
       <div className="text-center mb-12 max-w-xl mx-auto">
         <span className="text-xs uppercase tracking-widest font-semibold text-yellow-700 bg-yellow-500/10 px-3 py-1 rounded-full inline-block mb-3 border border-yellow-500/10">
           Handmade Treasures
         </span>
-        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-yellow-700 via-amber-500 to-yellow-800 bg-clip-text text-transparent">
+        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-yellow-700 via-amber-500 to-yellow-800 bg-clip-text text-transparent">
           Our Exclusive Collection
         </h2>
-        <div className="w-16 h-[2px] bg-gradient-to-r from-yellow-600 to-amber-500 mx-auto rounded-full mb-4"></div>
+        <div className="w-16 h-0.5 bg-linear-to-r from-yellow-600 to-amber-500 mx-auto rounded-full mb-4"></div>
         <p className="text-sm text-stone-500 leading-relaxed font-light">
           Discover our finest handcrafted jewellery pieces, each designed with artistic passion and meticulously finished for luxurious beauty.
         </p>
@@ -138,7 +138,7 @@ const Products = () => {
               key={product.id} 
               className="bg-white rounded-2xl border border-yellow-500/10 shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1 group flex flex-col justify-between"
             >
-              <div className="relative overflow-hidden aspect-[4/3] bg-stone-50">
+              <div className="relative overflow-hidden aspect-4/3 bg-stone-50">
                 <img 
                   src={product.image} 
                   alt={product.name} 
@@ -267,7 +267,7 @@ const Products = () => {
                     <span>- ₹{discountAmount.toLocaleString('en-IN')}</span>
                   </div>
                 )}
-                <div className="w-full h-[1px] bg-stone-250 my-1"></div>
+                <div className="w-full h-px bg-stone-250 my-1"></div>
                 <div className="flex justify-between items-center text-sm font-bold text-gray-950">
                   <span>Total Payable Price</span>
                   <span className="text-yellow-700 text-base font-serif font-bold">₹{finalPrice.toLocaleString('en-IN')}</span>
@@ -290,7 +290,7 @@ const Products = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-yellow-500 to-amber-600 text-gray-950 px-6 py-2.5 rounded-lg hover:from-yellow-600 hover:to-amber-700 transition text-xs font-bold uppercase tracking-widest border border-yellow-500/15"
+                  className="bg-linear-to-r from-yellow-500 to-amber-600 text-gray-950 px-6 py-2.5 rounded-lg hover:from-yellow-600 hover:to-amber-700 transition text-xs font-bold uppercase tracking-widest border border-yellow-500/15"
                 >
                   Confirm Order
                 </button>
